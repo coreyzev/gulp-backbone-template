@@ -7,10 +7,12 @@
     "url": "git://github.com/coreyzev/gulp-backbone-template.git"
   },
   "browser": {
-    "underscore"  : "backbone/node_modules/underscore",
-    "plugin"      : "./src/javascript/vendor/jquery-plugin.js",
-    "pageslider"  : "./src/javascript/vendor/pageslider.js",
-    "ratchet"     : "./src/javascript/vendor/ratchet.js"
+    "underscore": "backbone/node_modules/underscore",
+    "plugin": "./src/javascript/vendor/jquery-plugin.js",
+    "pageslider": "./src/javascript/vendor/pageslider.js",
+    "ratchet": "./src/javascript/vendor/ratchet.js",
+    "classie": "./src/javascript/vendor/classie.js",
+    "sidebars": "./src/javascript/vendor/sidebarEffects.js"
   },
   "browserify": {
     "transform": [
@@ -34,6 +36,15 @@
     },
     "ratchet": {
       "exports": "ratchet"
+    },
+    "sidebars": {
+      "exports": "sidebars",
+      "depends": [
+        "classie:classie"
+      ]
+    },
+    "classie": {
+      "exports": "classie"
     }
   },
   "devDependencies": {

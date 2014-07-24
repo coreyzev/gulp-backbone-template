@@ -43,7 +43,7 @@ var MasterView = Backbone.View.extend({
    */
   render: function render() {
 
-    var context = this.model.toJSON();
+    var context = this.model ? this.model.toJSON() : {};
 
     // Find a custom context for your view
     this.beforeRender();
