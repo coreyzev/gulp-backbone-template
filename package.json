@@ -1,14 +1,15 @@
 {
-  "name": "gulp-starter",
-  "version": "0.1.1",
+  "name": "gulp-backbone-template",
+  "version": "0.1.2",
   "description": "Gulp starter with common tasks and scenarios",
   "repository": {
     "type": "git",
-    "url": "git://github.com/greypants/gulp-starter.git"
+    "url": "git://github.com/coreyzev/gulp-backbone-template.git"
   },
   "browser": {
     "underscore": "backbone/node_modules/underscore",
-    "plugin": "./src/javascript/vendor/jquery-plugin.js"
+    "plugin": "./src/javascript/vendor/jquery-plugin.js",
+    "pageslider": "./src/javascript/vendor/pageslider.js"
   },
   "browserify": {
     "transform": [
@@ -20,6 +21,12 @@
   "browserify-shim": {
     "plugin": {
       "exports": "plugin",
+      "depends": [
+        "jquery:$"
+      ]
+    },
+    "pageslider": {
+      "exports": "pageslider",
       "depends": [
         "jquery:$"
       ]
@@ -45,6 +52,7 @@
   },
   "dependencies": {
     "backbone": "^1.1.2",
-    "jquery": "^2.1.0"
+    "jquery": "^2.1.0",
+    "jquery.transit": "^0.9.12"
   }
 }

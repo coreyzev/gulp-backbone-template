@@ -1,7 +1,4 @@
-var _ = require('underscore'),
-    Backbone = require('backbone'),
-    MainView = require('../templates/template.hbs');
-    Backbone.$ = require('jquery');
+var MainView = require('../templates/template.hbs');
 
 var MasterView = Backbone.View.extend({
     template: MainView,
