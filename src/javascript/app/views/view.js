@@ -1,5 +1,6 @@
-var MainView = require('../templates/template.hbs'),
-    MasterView = require('./MasterView');
+var App = require('../start.js'),
+    MasterView = require('./MasterView'),
+    MainView = require('../templates/template.hbs');
 
 module.exports = MasterView.extend({
     template: MainView,
