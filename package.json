@@ -9,7 +9,8 @@
   "browser": {
     "underscore": "backbone/node_modules/underscore",
     "plugin": "./src/javascript/vendor/jquery-plugin.js",
-    "pageslider": "./src/javascript/vendor/pageslider.js"
+    "pageslider": "./src/javascript/vendor/pageslider.js",
+    "ratchet": "./src/javascript/vendor/ratchet.js"
   },
   "browserify": {
     "transform": [
@@ -30,6 +31,9 @@
       "depends": [
         "jquery:$"
       ]
+    },
+    "ratchet": {
+      "exports": "ratchet"
     }
   },
   "devDependencies": {
