@@ -8,6 +8,9 @@ module.exports = {
   Views: {
     Instances: {}
   },
+  Layouts: {
+    Instances: {}
+  },
   Routers: {
     Instances: {}
   },

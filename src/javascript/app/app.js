@@ -1,7 +1,8 @@
-$ = require('jquery');
-_ = require('underscore');
-Backbone = require('backbone');
-Backbone.$ = require('jquery');
+	$ = require('jquery');
+	_ = require('underscore');
+	Backbone = require('backbone');
+	Backbone.$ = require('jquery');
+	LayoutManager = require('backbone.layoutmanager');
 
 var App = require('./start'),
 	Router = require('./routers/Router'),

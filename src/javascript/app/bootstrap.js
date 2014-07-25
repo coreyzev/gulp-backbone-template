@@ -5,13 +5,27 @@ var App = require("./start");
  * @param  {String} name Name for a view
  * @return {Backbone.View}
  */
-App.view = function getViewindowstance(name) {
+App.view = function getViewInstance(name) {
   if(!App.Views.Instances.hasOwnProperty(name)) {
     console.error("Cannot find an Instance for the view : " + name);
     return undefined;
   }
   return App.Views.Instances[name];
 };
+
+/**
+ * Get an instance for a layout
+ * @param  {String} name Name for a view
+ * @return {Backbone.View}
+ */
+App.layout = function getLayoutInstance(name) {
+  if(!App.Layouts.Instances.hasOwnProperty(name)) {
+    console.error("Cannot find an Instance for the layout : " + name);
+    return undefined;
+  }
+  return App.Layouts.Instances[name];
+};
+
 
 /**
  * Get an instance for a model

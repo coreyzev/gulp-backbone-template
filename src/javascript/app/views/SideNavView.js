@@ -1,15 +1,14 @@
 var App = require('../start.js'),
-    MasterView = require('./MasterView'),
-    MainView = require('../templates/MainView');
+    
+    SideNavTmp = require('../templates/layouts/SideNavView');
 
-module.exports = MasterView.extend({
-    template: MainView,
+module.exports = Backbone.View.extend({
+    template: SideNavTmp,
+    el: '#mp-menu',
     events: {
         
     },
-    initialize: function() {
-        return this.render();
-    },
+    serialize: {},
     afterRender: function() {
         require('sidebars');
         new mlPushMenu(

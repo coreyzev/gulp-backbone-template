@@ -25,23 +25,6 @@ html, body, .container, .scroller {
 	//background: #34495e;
 }
 
-.menu-trigger {
-	position: relative;
-	padding-left: 60px;
-	font-size: 0.9em;
-}
-
-.menu-trigger:before {
-	position: absolute;
-	top: 2px;
-	left: 0;
-	width: 40px;
-	height: 6px;
-	background: #fff;
-	box-shadow: 0 6px #34495e, 0 12px #fff, 0 18px #34495e, 0 24px #fff;
-	content: '';
-}
-
 .mp-pusher {
 	position: relative;
 	left: 0;
@@ -167,10 +150,6 @@ html, body, .container, .scroller {
 .mp-menu h2 {
 	margin: 0;
 	padding: 1em;
-	color: rgba(0,0,0,0.4);
-	text-shadow: 0 0 1px rgba(0,0,0,0.1);
-	font-weight: 300;
-	font-size: 2em;
 }
 
 .mp-menu.mp-overlap h2::before {
@@ -191,9 +170,6 @@ html, body, .container, .scroller {
 
 .mp-menu.mp-cover h2 {
 	text-transform: uppercase;
-	font-weight: 700;
-	letter-spacing: 1px;
-	font-size: 1em;
 }
 
 .mp-overlap .mp-level.mp-level-overlay > h2::before {
@@ -208,14 +184,15 @@ html, body, .container, .scroller {
 
 .mp-menu ul li > a {
 	display: block;
-	padding: 0.7em 1em 0.7em 1.8em;
+	padding: 0.7em 1em 0.7em 30px;
 	outline: none;
 	box-shadow: inset 0 -1px rgba(0,0,0,0.2);
 	text-shadow: 0 0 1px rgba(255,255,255,0.1);
-	font-size: 1.4em;
+	font-size: 0.8em;
 	-webkit-transition: background 0.3s, box-shadow 0.3s;
 	-moz-transition: background 0.3s, box-shadow 0.3s;
 	transition: background 0.3s, box-shadow 0.3s;
+	width: 300px;
 }
 
 .mp-menu ul li::before {
@@ -224,6 +201,7 @@ html, body, .container, .scroller {
 	z-index: -1;
 	color: rgba(0,0,0,0.2);
 	line-height: 3.5;
+	width: 300px;
 }
 
 .mp-level > ul > li:first-child > a {
