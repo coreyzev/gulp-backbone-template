@@ -10,8 +10,6 @@ module.exports = Backbone.View.extend({
     serialize: {},
     afterRender: function() {
         App.Utils.slider.slidePage(this.$el);
-        this.$el.on("webkitTransitionEnd", function() {
-            alert("slide in done");
-        });
+        console.log("slider rendered");
     }
 });

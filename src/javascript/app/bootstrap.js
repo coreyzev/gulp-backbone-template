@@ -1,4 +1,16 @@
 var App = require("./start");
+/**
+ * Get an instance for a view
+ * @param  {String} name Name for a view
+ * @return {Backbone.View}
+ */
+App.router = function getRouterInstance(name) {
+  if(!App.Routers.Instances.hasOwnProperty(name)) {
+    console.error("Cannot find an Instance for the router : " + name);
+    return undefined;
+  }
+  return App.Routers.Instances[name];
+};
 
 /**
  * Get an instance for a view

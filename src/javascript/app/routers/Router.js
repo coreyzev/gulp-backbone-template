@@ -14,7 +14,7 @@ var App = require('../start'),
 module.exports = Backbone.Router.extend({
 
     routes: {
-        '': 'home',
+        '': 'index',
         'employees/:id/map': 'map',
         'lorem': 'test',
         'test2': 'test2',
@@ -46,18 +46,8 @@ module.exports = Backbone.Router.extend({
         });
     },
 
-    home: function() {
-        /*
-        // Since the home view never changes, we instantiate it and render it only once
-        if (!App.view('homeView')) {
-            //App.Views.Instances.homeView = new MainView();
-            //App.view('homeView').render();
-        } else {
-            console.log('reusing home view');
-            App.view('homeView').delegateEvents(); // delegate events when the view is recycled
-        }
-        //App.Utils.slider.slidePage(App.view('homeView').$el);
-        */
+    index: function() {
+        console.log("Index Page");
     },
 
     map: function(id) {
