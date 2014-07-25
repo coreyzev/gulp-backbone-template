@@ -5,19 +5,20 @@ var App = require('../start'),
     ContentView = require('../views/ContentView'),
     FooterView = require('../views/FooterView'),
     SideNavView = require('../views/SideNavView'),
+    SliderPageView = require('../views/SliderPageView'),
 
     MainViewTmp = require('../templates/layouts/MainView');
 
-require('pageslider');
+    require('pageslider');
 
 module.exports = Backbone.Router.extend({
 
     routes: {
         '': 'home',
-        ':id': 'page',
         'employees/:id/map': 'map',
         'lorem': 'test',
-        'test2': 'test2'
+        'test2': 'test2',
+        ':id': 'page'
     },
 
     initialize: function() {
@@ -36,13 +37,13 @@ module.exports = Backbone.Router.extend({
                 '#content': new ContentView(),
                 'footer': new FooterView(),
                 '#mp-menu': new SideNavView()
-            }).renderViews();
+            }).renderViews().promise().done(function() {
+                App.Utils.slider = new PageSlider($('.primaryView'));
+                mainLayout.getView('#content').setViews({
+                    '.sliderContent': new SliderPageView()
+                }).renderViews();
+            });
         });
-
-        App.Utils.slider = new PageSlider($('.primaryView'));
-        App.Utils.slider.slidePage($('.primaryView'));
-        //mainLayout.getView('.primaryView').$el.addClass('content');
-
     },
 
     home: function() {
@@ -64,10 +65,12 @@ module.exports = Backbone.Router.extend({
     },
 
     test: function() {
+        console.log("Lorem Test Page reached");
+        $('.sliderContent').append('<div class="page right testDiv">Goodbye World</div>');
+        App.Utils.slider.slidePage($('.testDiv'));
 
-        //App.Utils.slider.slidePage($(<div>test</div>));
         // Create a blank new Page.
-        App.Models.Instance.page = new App.Models.Page({});
+        //App.Models.Instance.page = new App.Models.Page({});
     },
 
     test2: function() {
@@ -80,6 +83,10 @@ module.exports = Backbone.Router.extend({
             view: new SecondPageView()
         });
 
+    },
+
+    page: function(id) {
+        console.log("Page function actuated", id);
     }
 
 });

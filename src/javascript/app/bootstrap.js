@@ -58,7 +58,7 @@ window.appTimesout  = [];
 window.syncTimesout = [];
 
 // Default time before we return to the home page in seconds
-window.TIMEOUT_BEFORE_HOME = 50;
+window.TIMEOUT_BEFORE_HOME = 50000;
 
 // Display App's debug if it's 1, 0 to hide them
 window.VERBOSE = 1;

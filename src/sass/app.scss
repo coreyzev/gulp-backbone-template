@@ -11,6 +11,19 @@ body {
     font-family: sans-serif;
 }
 
+.mp-pusher.mp-pushed::after, .mp-level.mp-level-overlay::after {
+	z-index: 15;
+}
+
+.scroller-inner {
+	height: 100%;
+}
+
+section, .sliderContent, .page {
+	height: 100%;
+	width: 100%;
+}
+
 .page {
-	padding: 54px 10px;
+	padding: 10px;
 }
