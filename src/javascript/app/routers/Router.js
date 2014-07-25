@@ -65,7 +65,7 @@ module.exports = Backbone.Router.extend({
 
     test: function() {
 
-        App.Utils.slider.slidePage($(<div>test</div>));
+        //App.Utils.slider.slidePage($(<div>test</div>));
         // Create a blank new Page.
         App.Models.Instance.page = new App.Models.Page({});
     },
