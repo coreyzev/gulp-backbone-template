@@ -1,6 +1,6 @@
 var App = require('../start.js'),
     Parents = require('../collections/ParentsCollection.js'),
-    pageAdapter = require('../adapters/localstorage-adapter.js');
+    pageAdapter = require('../adapters/localstorage-pages.js');
 
 module.exports = Backbone.Model.extend({
 
