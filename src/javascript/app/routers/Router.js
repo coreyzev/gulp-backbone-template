@@ -59,7 +59,7 @@ module.exports = Backbone.Router.extend({
     },
 
     index: function() {
-       this.page("home");
+        this.page("home");
     },
 
     page: function(slug) {
@@ -86,6 +86,7 @@ module.exports = Backbone.Router.extend({
                     new SliderPageView({ model: data }).render();
                     new HeaderView({ model: data }).render();
                     new FooterView({ model: data }).render();
+                    new SideNavView({ model: data }).render();
                 }
             });
         })

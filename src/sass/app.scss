@@ -11,8 +11,27 @@ body {
     font-family: sans-serif;
 }
 
-.mp-pusher.mp-pushed::after, .mp-level.mp-level-overlay::after {
+.mp-pusher.mp-pushed::after {
 	z-index: 15;
+}
+
+.mp-menu ul li::before {
+	left: 5px;
+	line-height: 2;
+}
+
+.mp-back::after {
+	content: none;
+	font-family: inherit;
+}
+
+.table-view {
+	background: transparent;
+	border: none;
+
+	a {
+		color: #fff;
+	}
 }
 
 .scroller-inner {
