@@ -64,30 +64,18 @@ module.exports = Backbone.Router.extend({
 
     page: function(slug) {
         pageAdapter.findBySlug(slug)
-        .done(function(data) {
-            var page;
-            if (!App.model(slug)) {
-                page = App.Models.Instances[slug] = new Page({
-                    pageSlug: slug
-                });
-                console.warn("Created Instance for model:", slug);
-            } else {
-                page = App.model(slug);
-            }
-            page.fetch({
-                //fix this to use layoutManager
-                success: function(data) {
-                    var layout = App.layout('mainLayout');
-                    Backbone.Layout.cleanViews([
-                        layout.getView('header'),
-                        layout.getView('footer'),
-                        layout.getView('#content').getView('.sliderContent')
-                    ]);
-                    new SliderPageView({ model: data }).render();
-                    new HeaderView({ model: data }).render();
-                    new FooterView({ model: data }).render();
-                    new SideNavView({ model: data }).render();
+            .done(function(data) {
+                var page;
+                if (!App.model(slug)) {
+                    page = App.Models.Instances[slug] = new Page({
+                        pageSlug: slug
+                    });
+                    console.warn("Created Instance for model:", slug);
+                } else {
+                    page = App.model(slug);
                 }
+                page.fetch({
+                    //fix this to use layoutManager
                     success: function(data) {
                         page.set({nextSlide:{}});
                         function updateNextSlide() {
@@ -110,11 +98,24 @@ module.exports = Backbone.Router.extend({
                                 });
                         }
                         updateNextSlide();
+
+                        var layout = App.layout('mainLayout');
+                        Backbone.Layout.cleanViews([
+                            layout.getView('header'),
+                            layout.getView('footer'),
+                            layout.getView('#content').getView('.sliderContent'),
+                            layout.getView('#mp-menu'),
+                        ]);
+                        layout.getView('#content').insertView('.sliderContent', new SliderPageView({ model: data })).render();
+                        layout.insertView('header', new HeaderView({ model: data })).render();
+                        layout.insertView('footer', new FooterView({ model: data })).render();
+                        layout.insertView('#mp-menu', new SideNavView({ model: data })).render();
+                    }
+                });
+            })
+            .fail(function(data) {
+                App.router("router").pageDNE(slug);
             });
-        })
-        .fail(function(data) {
-            App.router("router").pageDNE(slug);
-        });
     },
 
     pageDNE: function(wrongHash) {
