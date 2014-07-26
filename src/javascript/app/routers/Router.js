@@ -47,12 +47,12 @@ module.exports = Backbone.Router.extend({
             mainLayout.setViews({
                 'header': new HeaderView(),
                 '#content': new ContentView(),
-                'footer': new FooterView(homePage),
+                'footer': new FooterView(),
                 '#mp-menu': new SideNavView()
             }).renderViews().promise().done(function() {
                 App.Utils.slider = new PageSlider($('.primaryView'));
                 mainLayout.getView('#content').setViews({
-                    '.sliderContent': new SliderPageView(homePage)
+                    '.sliderContent': new SliderPageView()
                 });
             });
         });
@@ -63,14 +63,14 @@ module.exports = Backbone.Router.extend({
     },
 
     page: function(slug) {
-        console.log("Page function actuated", slug);
-        if (pageAdapter.findBySlug(slug)) {
+        pageAdapter.findBySlug(slug)
+        .done(function(data) {
             var page;
             if (!App.model(slug)) {
                 page = App.Models.Instances[slug] = new Page({
                     pageSlug: slug
                 });
-                console.log("Created Instance for model:", slug);
+                console.warn("Created Instance for model:", slug);
             } else {
                 page = App.model(slug);
             }
@@ -82,41 +82,14 @@ module.exports = Backbone.Router.extend({
                     }).render();
                 }
             });
-        } else {
-            this.pageDNE(slug);
-        }
-    },
-
-    pageDNE: function(x) {
-        console.log("You tried to reach ", x, " and failed. Sorry.");
-    },
-
-
-
-
-
-
-
-
-    test: function() {
-        console.log("Lorem Test Page reached");
-        $('.sliderContent').append('<div class="page right testDiv">Goodbye World</div>');
-        App.Utils.slider.slidePage($('.testDiv'));
-
-        // Create a blank new Page.
-        //App.Models.Instance.page = new App.Models.Page({});
-    },
-
-    test2: function() {
-
-        // Set the login page as the second for example...
-        App.Models.Instance.page.set({
-            title: 'My Second Screen!',
-
-            // Put the login page into the layout.
-            view: new SecondPageView()
+        })
+        .fail(function(data) {
+            App.router("router").pageDNE(slug);
         });
+    },
 
+    pageDNE: function(wrongHash) {
+        console.log("You tried to reach ", wrongHash, " and failed. Sorry.");
     }
 
 });

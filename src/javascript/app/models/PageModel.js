@@ -17,10 +17,20 @@ module.exports = Backbone.Model.extend({
         this.reports.parent = this;
         this.on("change", function() {
             var next = this.attributes.nextSlide,
-                nextObj = pageAdapter.findById(next.id);
+                nextObj = {},
+                model = this;
+
             next.id = this.id + 1;
-            next.slug = nextObj.pageSlug;
-            next.title = nextObj.title;
+
+            pageAdapter.findById(next.id)
+            .done(function(data) {
+                nextObj = data;
+                next.slug = nextObj.pageSlug;
+                next.title = nextObj.title;
+            })
+            .fail(function(){
+                model.unset("nextSlide", { silent: true });
+            });
         });
     },
 

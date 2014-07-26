@@ -13,8 +13,10 @@ module.exports = Backbone.View.extend({
         'click a': 'navigate',
         'update': 'onUpdate'
     },
-    serialize: function(){
-        return this.model.toJSON();
+    serialize: function() {
+        if (this.model) {
+            return this.model.toJSON() ;
+        }
     },
     afterRender: function() {
         this.makeActive(this.activeTab);
@@ -32,7 +34,6 @@ module.exports = Backbone.View.extend({
     navigate: function(e) {
         e.preventDefault();
         var target = e.target.hash;
-        console.log('triggering navigate from footer');
         Backbone.history.navigate(target, true);
     }
 });

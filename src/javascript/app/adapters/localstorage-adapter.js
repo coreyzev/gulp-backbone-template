@@ -18,7 +18,11 @@ module.exports = (function () {
                 }
             }
 
-            deferred.resolve(page);
+            if (page) {
+                deferred.resolve(page);
+            } else {
+                deferred.reject();
+            }
             return deferred.promise();
         },
 
@@ -28,10 +32,11 @@ module.exports = (function () {
                 results = pages.filter(function (element) {
                     return element.pageSlug.toLowerCase() == searchKey.toLowerCase();
                 });
+
             if (results.length) {
                 deferred.resolve(results[0]);
             } else {
-                deferred.reject(null);
+                deferred.reject();
             }
             return deferred.promise();
         },
@@ -42,7 +47,11 @@ module.exports = (function () {
                 results = pages.filter(function (element) {
                     return parentId === element.parentId;
                 });
-            deferred.resolve(results);
+            if (results.length) {
+                deferred.resolve(results);
+            } else {
+                deferred.reject();
+            }
             return deferred.promise();
         };
 
