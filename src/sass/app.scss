@@ -53,6 +53,8 @@ section, .sliderContent, .page {
 	&.next {
 		width: 37.5%;
 		padding-left: 15px;
+		padding-right: 15px;
+		text-align: right;
 	}
 
 	&::first-child {
