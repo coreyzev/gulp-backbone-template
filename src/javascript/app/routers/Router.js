@@ -32,7 +32,7 @@ module.exports = Backbone.Router.extend({
         App.Collections.Instances.pages = new Pages();
         App.Models.Instances.home = new Page({ pageSlug: "home" });
         App.model("home").fetch();
-        var homePage = {model: App.model("home")};
+        var homePage = { model: App.model("home") };
 
         Backbone.Layout.configure({
             manage: true,
@@ -88,6 +88,28 @@ module.exports = Backbone.Router.extend({
                     new FooterView({ model: data }).render();
                     new SideNavView({ model: data }).render();
                 }
+                    success: function(data) {
+                        page.set({nextSlide:{}});
+                        function updateNextSlide() {
+                            var next = page.attributes.nextSlide,
+                                nextObj = {},
+                                model = page;
+
+                            next.id = page.id + 1;
+
+                            pageAdapter.findById(next.id)
+                                .done(function(data) {
+                                    nextObj = data;
+                                    next.slug = nextObj.pageSlug;
+                                    next.title = nextObj.title;
+                                })
+                                .fail(function() {
+                                    model.unset("nextSlide", {
+                                        silent: false
+                                    });
+                                });
+                        }
+                        updateNextSlide();
             });
         })
         .fail(function(data) {
