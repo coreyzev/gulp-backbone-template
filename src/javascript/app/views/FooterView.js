@@ -19,7 +19,6 @@ module.exports = Backbone.View.extend({
     },
     afterRender: function() {
         this.makeActive(this.activeTab);
-        console.log(this, this.serialize());
     },
     onUpdate: function() {
 
