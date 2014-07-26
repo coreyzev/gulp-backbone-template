@@ -1,6 +1,6 @@
 var App = require('../start'),
     Bootstrap = require('../bootstrap'),
-    pageAdapter = require('../adapters/localstorage-adapter.js'),
+    pageAdapter = require('../adapters/localstorage-pages.js'),
 
     //Views
     HeaderView = require('../views/HeaderView'),
@@ -38,7 +38,7 @@ module.exports = Backbone.Router.extend({
             manage: true,
             el: false
         });
-        var mainLayout = new Backbone.Layout({
+        var mainLayout = App.Layouts.Instances.mainLayout = new Backbone.Layout({
             template: MainViewTmp,
             el: 'body'
         });
@@ -47,19 +47,19 @@ module.exports = Backbone.Router.extend({
             mainLayout.setViews({
                 'header': new HeaderView(),
                 '#content': new ContentView(),
-                'footer': new FooterView(),
+                'footer': new FooterView(homePage),
                 '#mp-menu': new SideNavView()
             }).renderViews().promise().done(function() {
                 App.Utils.slider = new PageSlider($('.primaryView'));
                 mainLayout.getView('#content').setViews({
-                    '.sliderContent': new SliderPageView()
+                    '.sliderContent': new SliderPageView(homePage)
                 });
             });
         });
     },
 
     index: function() {
-        this.page("home");
+       this.page("home");
     },
 
     page: function(slug) {
@@ -77,9 +77,15 @@ module.exports = Backbone.Router.extend({
             page.fetch({
                 //fix this to use layoutManager
                 success: function(data) {
-                    new SliderPageView({
-                        model: data
-                    }).render();
+                    var layout = App.layout('mainLayout');
+                    Backbone.Layout.cleanViews([
+                        layout.getView('header'),
+                        layout.getView('footer'),
+                        layout.getView('#content').getView('.sliderContent')
+                    ]);
+                    new SliderPageView({ model: data }).render();
+                    new HeaderView({ model: data }).render();
+                    new FooterView({ model: data }).render();
                 }
             });
         })

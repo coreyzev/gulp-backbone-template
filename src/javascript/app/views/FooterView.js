@@ -3,10 +3,6 @@ var App = require('../start.js'),
     FooterTmp = require('../templates/layouts/FooterView');
 
 module.exports = Backbone.View.extend({
-    defaults: {
-        activeTab: 'home',
-        nextButton: 2
-    },
     template: FooterTmp,
     el: 'footer',
     events: {
@@ -18,9 +14,12 @@ module.exports = Backbone.View.extend({
             return this.model.toJSON() ;
         }
     },
+    initialize: function() {
+        this.activeTab = this.model.attributes.pageSlug;
+    },
     afterRender: function() {
         this.makeActive(this.activeTab);
-        console.log(this.serialize());
+        console.log(this, this.serialize());
     },
     onUpdate: function() {
 
