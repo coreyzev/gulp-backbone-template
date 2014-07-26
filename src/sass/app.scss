@@ -27,3 +27,16 @@ section, .sliderContent, .page {
 .page {
 	padding: 10px;
 }
+
+.bar-tab .tab-item {
+	width:10%;
+
+	&.next {
+		width: 37.5%;
+		padding-left: 15px;
+	}
+
+	&::first-child {
+
+	}
+}

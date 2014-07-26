@@ -46,7 +46,7 @@ App.layout = function getLayoutInstance(name) {
  */
 App.model = function getModelInstance(name) {
   if(!App.Models.Instances.hasOwnProperty(name)) {
-    console.error("Cannot find an Instance for the view : " + name);
+    console.error("Cannot find an Instance for the model : " + name);
     return undefined;
   }
   return App.Models.Instances[name];
@@ -59,7 +59,7 @@ App.model = function getModelInstance(name) {
  */
 App.collection = function getCollectionInstance(name) {
   if(!App.Collections.Instances.hasOwnProperty(name)) {
-    console.error("Cannot find an Instance for the view : " + name);
+    console.error("Cannot find an Instance for the collection : " + name);
     return undefined;
   }
   return App.Collections.Instances[name];

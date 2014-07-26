@@ -13,24 +13,37 @@ window.PageSlider = function (container) {
         location.hash = stateHistory[stateHistory.length - 2];
     };
 
-    // Use this function if you want PageSlider to automatically determine the sliding direction based on the state history
-    this.slidePage = function(page) {
+    this.state = function() {
 
         var l = stateHistory.length,
             state = window.location.hash;
 
         if (l === 0) {
             stateHistory.push(state);
-            this.slidePageFrom(page);
-            return;
-        }
-        if (state === stateHistory[l-2]) {
+            return "start";
+        } else if (state === stateHistory[l-2]) {
             stateHistory.pop();
-            this.slidePageFrom(page, 'left');
+            return "back";
         } else {
             stateHistory.push(state);
-            this.slidePageFrom(page, 'right');
+            return "forward";
         }
+    };
+
+    // Use this function if you want PageSlider to automatically determine the sliding direction based on the state history
+    this.slidePage = function(page) {
+
+        switch (this.state()) {
+            case "start":
+                this.slidePageFrom(page);
+                break;
+            case "back":
+                this.slidePageFrom(page, 'left');
+                break;
+            default:
+                this.slidePageFrom(page, 'right');
+                break;
+            }
 
     };
 
@@ -42,6 +55,7 @@ window.PageSlider = function (container) {
         if (!currentPage || !from) {
             page.attr("class", "page center");
             currentPage = page;
+            stateHistory.push(window.location.hash);
             return;
         }
 

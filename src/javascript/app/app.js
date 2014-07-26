@@ -10,5 +10,5 @@ var App = require('./start'),
 
 $(document).on("ready", function () { //eventually on "deviceReady"
 	App.Routers.Instances.router = new Router();
-	Backbone.history.start({pushState: true, hashChange: false, root: '/'});
+	Backbone.history.start({});//pushState: true, root: '/'});
 });

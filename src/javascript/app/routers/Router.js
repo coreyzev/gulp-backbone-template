@@ -1,12 +1,21 @@
 var App = require('../start'),
     Bootstrap = require('../bootstrap'),
+    pageAdapter = require('../adapters/localstorage-adapter.js'),
 
+    //Views
     HeaderView = require('../views/HeaderView'),
     ContentView = require('../views/ContentView'),
     FooterView = require('../views/FooterView'),
     SideNavView = require('../views/SideNavView'),
     SliderPageView = require('../views/SliderPageView'),
 
+    //Models
+    Page = require('../models/PageModel'),
+
+    //Collections
+    Pages = require('../collections/PagesCollection'),
+
+    //Templates
     MainViewTmp = require('../templates/layouts/MainView');
 
     require('pageslider');
@@ -15,13 +24,16 @@ module.exports = Backbone.Router.extend({
 
     routes: {
         '': 'index',
-        'employees/:id/map': 'map',
-        'lorem': 'test',
-        'test2': 'test2',
-        ':id': 'page'
+        ':slug': 'page'
     },
 
     initialize: function() {
+
+        App.Collections.Instances.pages = new Pages();
+        App.Models.Instances.home = new Page({ pageSlug: "home" });
+        App.model("home").fetch();
+        var homePage = {model: App.model("home")};
+
         Backbone.Layout.configure({
             manage: true,
             el: false
@@ -35,24 +47,56 @@ module.exports = Backbone.Router.extend({
             mainLayout.setViews({
                 'header': new HeaderView(),
                 '#content': new ContentView(),
-                'footer': new FooterView(),
+                'footer': new FooterView(homePage),
                 '#mp-menu': new SideNavView()
             }).renderViews().promise().done(function() {
                 App.Utils.slider = new PageSlider($('.primaryView'));
                 mainLayout.getView('#content').setViews({
-                    '.sliderContent': new SliderPageView()
-                }).renderViews();
+                    '.sliderContent': new SliderPageView(homePage)
+                });
             });
         });
     },
 
     index: function() {
-        console.log("Index Page");
+        this.page("home");
     },
 
-    map: function(id) {
-        //App.Utils.slider.slidePage(new app.views.MapView().render().$el);
+    page: function(slug) {
+        console.log("Page function actuated", slug);
+        if (pageAdapter.findBySlug(slug)) {
+            var page;
+            if (!App.model(slug)) {
+                page = App.Models.Instances[slug] = new Page({
+                    pageSlug: slug
+                });
+                console.log("Created Instance for model:", slug);
+            } else {
+                page = App.model(slug);
+            }
+            page.fetch({
+                //fix this to use layoutManager
+                success: function(data) {
+                    new SliderPageView({
+                        model: data
+                    }).render();
+                }
+            });
+        } else {
+            this.pageDNE(slug);
+        }
     },
+
+    pageDNE: function(x) {
+        console.log("You tried to reach ", x, " and failed. Sorry.");
+    },
+
+
+
+
+
+
+
 
     test: function() {
         console.log("Lorem Test Page reached");
@@ -73,10 +117,6 @@ module.exports = Backbone.Router.extend({
             view: new SecondPageView()
         });
 
-    },
-
-    page: function(id) {
-        console.log("Page function actuated", id);
     }
 
 });
