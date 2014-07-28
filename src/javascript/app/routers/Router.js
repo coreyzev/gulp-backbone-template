@@ -25,10 +25,12 @@ module.exports = Backbone.Router.extend({
 
     routes: {
         '': 'index',
-        ':slug': 'page'
+        ':slug1(/:slug2)(/:slug3)(/:slug4)': 'page'
     },
 
     initialize: function() {
+
+        document.title = "CZ Updated Backbone App";
 
         App.Collections.Instances.pages = new Pages();
         App.Models.Instances.home = new Page({ pageSlug: "home" });
@@ -63,7 +65,15 @@ module.exports = Backbone.Router.extend({
         this.page("home");
     },
 
-    page: function(slug) {
+    page: function(slug1, slug2, slug3, slug4) {
+        var slug = slug1;
+        for (var s = 1; s < arguments.length; s++) {
+            if (arguments[s]) {
+                console.log(arguments[s]);
+                slug = slug + "/" + arguments[s];
+                console.log(slug);
+            }
+        }
         pageAdapter.findBySlug(slug)
             .done(function(data) {
                 var page;
@@ -117,6 +127,7 @@ module.exports = Backbone.Router.extend({
             .fail(function(data) {
                 App.router("router").pageDNE(slug);
             });
+
     },
 
     pageDNE: function(wrongHash) {

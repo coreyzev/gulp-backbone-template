@@ -56,20 +56,23 @@ module.exports = (function () {
         };
 
 
+    //CURRENTLY, we're managing the nesting and breadcrumbs using the slug you see here, breaking the string at the slash, and parsing the names.
+    // Stop doing that, you can do better, just use the parent IDs, or find a way to write ID's with period seperators.
+
     // Store sample data in Local Storage
     window.localStorage.setItem("pages", JSON.stringify(
         [
             {id: 1, pageSlug: "home", parentId: 0, title: "The Home Page", template: "", postRender: "", addonIDs: []},
             {id: 2, pageSlug: "lorem", parentId: 0, title: "Lorem", template: "", postRender: "", addonIDs: []},
-            {id: 3, pageSlug: "dolor", parentId: 2, title: "Dolor", template: "", postRender: "", addonIDs: []},
-            {id: 4, pageSlug: "sit", parentId: 3, title: "Sit", template: "", postRender: "", addonIDs: []},
-            {id: 5, pageSlug: "ipsum", parentId: 3, title: "Ipsum", template: "", postRender: "", addonIDs: []},
-            {id: 6, pageSlug: "consectetur", parentId: 2, title: "Consectetur", template: "", postRender: "", addonIDs: []},
-            {id: 7, pageSlug: "adipiscing", parentId: 6, title: "Adipiscing", template: "", postRender: "", addonIDs: []},
-            {id: 5, pageSlug: "elit", parentId: 7, title: "Elit", template: "", postRender: "", addonIDs: []},
+            {id: 3, pageSlug: "lorem/dolor", parentId: 2, title: "Dolor", template: "", postRender: "", addonIDs: []},
+            {id: 4, pageSlug: "lorem/dolor/sit", parentId: 3, title: "Sit", template: "", postRender: "", addonIDs: []},
+            {id: 5, pageSlug: "lorem/dolor/ipsum", parentId: 3, title: "Ipsum", template: "", postRender: "", addonIDs: []},
+            {id: 6, pageSlug: "lorem/consectetur", parentId: 2, title: "Consectetur", template: "", postRender: "", addonIDs: []},
+            {id: 7, pageSlug: "lorem/consectetur/adipiscing", parentId: 6, title: "Adipiscing", template: "", postRender: "", addonIDs: []},
+            {id: 5, pageSlug: "lorem/consectetur/adipiscing/elit", parentId: 7, title: "Elit", template: "", postRender: "", addonIDs: []},
             {id: 8, pageSlug: "donec", parentId: 0, title: "Donec", template: "", postRender: "", addonIDs: []},
-            {id: 9, pageSlug: "consequat", parentId: 8, title: "Consequat", template: "", postRender: "", addonIDs: []},
-            {id: 10, pageSlug: "imperdiet", parentId: 9, title: "Imperdiet", template: "", postRender: "", addonIDs: []}
+            {id: 9, pageSlug: "donec/consequat", parentId: 8, title: "Consequat", template: "", postRender: "", addonIDs: []},
+            {id: 10, pageSlug: "donec/consequat/imperdiet", parentId: 9, title: "Imperdiet", template: "", postRender: "", addonIDs: []}
         ]
     ));
 
