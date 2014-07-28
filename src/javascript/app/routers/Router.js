@@ -61,11 +61,22 @@ module.exports = Backbone.Router.extend({
         });
     },
 
+    linkClick: function (target, trigger) {
+        if ($(target).data("bypass")) {
+            if (target.href !== "") {
+                window.location.href = target.href;
+            }
+        } else {
+            this.navigate(target.hash, true);
+        }
+    },
+
     index: function() {
         this.page("home");
     },
 
     page: function(slug1, slug2, slug3, slug4) {
+        // Please god one day make these breadcrumbs less sucky (see: localstorage-pages.js)
         var slug = slug1;
         for (var s = 1; s < arguments.length; s++) {
             if (arguments[s]) {

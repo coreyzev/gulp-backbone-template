@@ -15,6 +15,7 @@ module.exports = Backbone.View.extend({
         }
     },
     initialize: function(options) {
+        this.undelegateEvents();
         if (!this.options.DNE) {
             this.activeTab = this.model.attributes.pageSlug;
         } else {
@@ -39,7 +40,8 @@ module.exports = Backbone.View.extend({
     },
     navigate: function(e) {
         e.preventDefault();
-        var target = e.target.hash;
-        Backbone.history.navigate(target, true);
+        var target = e.target;
+        App.router("router").linkClick(target, true);
+        console.log("navigate");
     }
 });
