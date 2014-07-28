@@ -14,8 +14,12 @@ module.exports = Backbone.View.extend({
             return this.model.toJSON() ;
         }
     },
-    initialize: function() {
-        this.activeTab = this.model.attributes.pageSlug;
+    initialize: function(options) {
+        if (!this.options.DNE) {
+            this.activeTab = this.model.attributes.pageSlug;
+        } else {
+            this.activeTab = false;
+        }
     },
     afterRender: function() {
         this.makeActive(this.activeTab);
@@ -24,10 +28,14 @@ module.exports = Backbone.View.extend({
 
     },
     makeActive: function(activeTarget) {
-        if (activeTarget === 'home') { activeTarget = '';}
-        var target = $('footer .tab-item[href="#' + activeTarget + '"]');
-        $('footer .active').removeClass('active');
-        $(target).addClass('active');
+        if (activeTarget) {
+            if (activeTarget === 'home') { activeTarget = '';}
+            var target = $('footer .tab-item[href="#' + activeTarget + '"]');
+            $('footer .active').removeClass('active');
+            $(target).addClass('active');
+        } else {
+            $('footer .active').removeClass('active');
+        }
     },
     navigate: function(e) {
         e.preventDefault();

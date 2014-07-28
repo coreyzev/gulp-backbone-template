@@ -8,6 +8,7 @@ var App = require('../start'),
     FooterView = require('../views/FooterView'),
     SideNavView = require('../views/SideNavView'),
     SliderPageView = require('../views/SliderPageView'),
+    DNEView = require('../views/404View'),
 
     //Models
     Page = require('../models/PageModel'),
@@ -119,7 +120,17 @@ module.exports = Backbone.Router.extend({
     },
 
     pageDNE: function(wrongHash) {
-        console.log("You tried to reach ", wrongHash, " and failed. Sorry.");
+        var layout = App.layout('mainLayout');
+        Backbone.Layout.cleanViews([
+            layout.getView('header'),
+            layout.getView('footer'),
+            layout.getView('#content').getView('.sliderContent'),
+            layout.getView('#mp-menu'),
+        ]);
+        layout.getView('#content').insertView('.sliderContent', new DNEView({ wrongHash: wrongHash })).render();
+        layout.insertView('header', new HeaderView({ DNE: true })).render();
+        layout.insertView('footer', new FooterView({ DNE: true })).render();
+        layout.insertView('#mp-menu', new SideNavView({ DNE: true })).render();
     }
 
 });
