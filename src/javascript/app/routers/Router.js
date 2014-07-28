@@ -41,7 +41,7 @@ module.exports = Backbone.Router.extend({
         });
         var mainLayout = App.Layouts.Instances.mainLayout = new Backbone.Layout({
             template: MainViewTmp,
-            el: 'body'
+            el: '.container'
         });
 
         mainLayout.render().promise().done(function() {
