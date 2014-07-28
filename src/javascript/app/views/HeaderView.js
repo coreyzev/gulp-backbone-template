@@ -8,7 +8,12 @@ module.exports = Backbone.View.extend({
     events: {
         
     },
-    serialize: {},
+    initialize: function() {
+        this.companyName = "AppTastic";
+    },
+    serialize: function() {
+        return this;
+    },
     afterRender: function() {
     }
 });

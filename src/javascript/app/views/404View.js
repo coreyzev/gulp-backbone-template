@@ -5,23 +5,13 @@ var App = require('../start.js'),
 module.exports = Backbone.View.extend({
     template: DNEViewTmp,
     initialize: function () {
-        if(this.model) {
-            if (this.model.template) {
-                this.template = this.model.template;
-            }
-        }
+
     },
     events: {
 
     },
     serialize: function() {
-        if (this.model) {
-            return this.model.toJSON() ;
-        } else if (this.options.wrongHash) {
-            return {wrongHash: this.options.wrongHash};
-        } else {
-            return {title: 'The Demo Slide' };
-        }
+        return {wrongHash: this.options.wrongHash};
     },
     afterRender: function() {
         App.Utils.slider.slidePage(this.$el);

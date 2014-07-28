@@ -6,6 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>CZ Backbone Template</title>
     <link rel="stylesheet" href="_r/app.css" />
+    <script type="text/javascript">
+    var app = document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1;
+    if (app) {
+        var pgjs = document.createElement('script');
+        pgjs.setAttribute('src', '/phonegap.js');
+        document.head.appendChild(pgjs);
+        document.addEventListener("deviceready", onDeviceReady, false);
+    } else {
+        //Meant for Web Only
+    }
+    </script>
 </head>
 
 <body>

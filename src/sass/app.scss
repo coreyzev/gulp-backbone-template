@@ -61,3 +61,40 @@ section, .sliderContent, .page {
 
 	}
 }
+
+header.bar {
+	//background-color: #019377;
+
+	* {
+		//color: #fff;
+	}
+
+	h1.title {
+		text-align: left;
+		padding-left: 50px;
+		z-index: 5;
+		width: auto;
+	}
+	.breadcrumbs {
+		display: inline;
+		position: relative;
+		top: 5px;
+		z-index: 4;
+		padding-left: 95px;
+		height: 100%;
+		line-height: 16px;
+
+		.icon-left, .icon-left-nav {
+			font-size: 10px;
+			line-height: 16px;
+			vertical-align: middle;
+		}
+
+		h5 {
+			line-height: 16px;
+			display: inline;
+			text-transform: uppercase;
+			font-weight: 400;
+		}
+	}
+}
