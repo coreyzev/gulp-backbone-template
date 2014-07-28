@@ -8,9 +8,6 @@ module.exports = Backbone.View.extend({
     events: {
         
     },
-    intitialize: function (){
-        this.listenTo(this.model, "change", this.render);
-    },
     serialize: {},
     afterRender: function() {
         require('sidebars');

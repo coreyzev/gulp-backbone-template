@@ -21,7 +21,6 @@ module.exports = Backbone.View.extend({
         } else {
             this.activeTab = false;
         }
-        this.listenTo(this.model, "change", this.render);
     },
     afterRender: function() {
         this.makeActive(this.activeTab);
