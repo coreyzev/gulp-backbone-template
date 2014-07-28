@@ -1,5 +1,5 @@
 var App = require('../start.js'),
-    Parents = require('../collections/ParentsCollection.js'),
+    Children = require('../collections/ChildrenCollection.js'),
     pageAdapter = require('../adapters/localstorage-pages.js');
 
 module.exports = Backbone.Model.extend({
@@ -14,8 +14,11 @@ module.exports = Backbone.Model.extend({
         });
         model.save();
         App.Models.Instances[this.attributes.pageSlug] = this;
-        this.reports = new Parents();
-        this.reports.parent = this;
+    },
+    fetchChildren: function(collection){
+        this.children = new Children();
+        this.children.parent = this;
+        this.children.fetch();
     },
     updateNextSlide: function(data) {
         var next = this.attributes.nextSlide,

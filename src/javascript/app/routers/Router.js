@@ -63,6 +63,9 @@ module.exports = Backbone.Router.extend({
         });
 
         App.Collections.Instances.pages = new Pages(JSON.parse(window.localStorage.getItem("pages")));
+        App.collection('pages').each(function(model) {
+            model.fetchChildren();
+        });
     },
 
     linkClick: function (target, trigger) {
