@@ -18,7 +18,19 @@ module.exports = Backbone.Model.extend({
     fetchChildren: function(collection){
         this.children = new Children();
         this.children.parent = this;
-        this.children.fetch();
+        var deferred = $.Deferred(),
+            model = this,
+            results = App.collection("pages").filter(function (element) {
+                return model.id === element.attributes.parentId;
+            });
+        if (results.length) {
+            deferred.resolve(results);
+        } else {
+            deferred.reject();
+        }
+        deferred.promise().done(function(data){
+            model.children = data;
+        });
     },
     updateNextSlide: function(data) {
         var next = this.attributes.nextSlide,
