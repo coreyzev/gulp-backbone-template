@@ -122,16 +122,16 @@ module.exports = Backbone.Router.extend({
                         updateNextSlide();
 
                         var layout = App.layout('mainLayout');
-                        Backbone.Layout.cleanViews([
-                            layout.getView('header'),
-                            layout.getView('footer'),
-                            layout.getView('#content').getView('.sliderContent'),
-                            layout.getView('#mp-menu'),
-                        ]);
-                        layout.getView('#content').insertView('.sliderContent', new SliderPageView({ model: data })).render();
-                        layout.insertView('header', new HeaderView({ model: data })).render();
-                        layout.insertView('footer', new FooterView({ model: data })).render();
-                        layout.insertView('#mp-menu', new SideNavView({ model: data })).render();
+                        layout.removeView('header');
+                        layout.removeView('footer');
+                        layout.getView('#content').removeView('.sliderContent');
+                        layout.removeView('#mp-menu');
+                        $('.scroller-inner').prepend('<header id="header" class="bar bar-nav"></header>').append('<footer id="footer" class="bar bar-tab"></footer>');
+                        $('#mp-pusher').prepend('<nav id="mp-menu" class="mp-menu"></nav>');
+                        layout.getView('#content').setView('.sliderContent', new SliderPageView({ model: data })).render();
+                        layout.setView('header', new HeaderView({ model: data })).render();
+                        layout.setView('footer', new FooterView({ model: data })).render();
+                        layout.setView('#mp-menu', new SideNavView({ model: data })).render();
                     }
                 });
             })
