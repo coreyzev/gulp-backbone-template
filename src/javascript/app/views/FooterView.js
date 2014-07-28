@@ -6,7 +6,7 @@ module.exports = Backbone.View.extend({
     template: FooterTmp,
     el: 'footer',
     events: {
-        'click a': 'navigate',
+        'click a': 'navClick',
         'update': 'onUpdate'
     },
     serialize: function() {
@@ -38,7 +38,7 @@ module.exports = Backbone.View.extend({
             $('footer .active').removeClass('active');
         }
     },
-    navigate: function(e) {
+    navClick: function(e) {
         e.preventDefault();
         var target = e.target;
         App.router("router").linkClick(target, true);
