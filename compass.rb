@@ -6,3 +6,4 @@ images_dir = 'build/_r/images'
 fonts_dir = 'build/_r/fonts'
 relative_assets = true
 line_comments = true
+#output_style = :compressed

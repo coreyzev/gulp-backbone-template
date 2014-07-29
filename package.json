@@ -12,7 +12,8 @@
     "pageslider": "./src/javascript/vendor/pageslider.js",
     "classie": "./src/javascript/vendor/classie.js",
     "sidebars": "./src/javascript/vendor/sidebarEffects.js",
-    "cheerio": "./node_modules/cheerio/index.js"
+    "cheerio": "./node_modules/cheerio/index.js",
+    "touchSwipe": "./src/javascript/vendor/jquery.touchSwipe.js"
   },
   "browserify": {
     "transform": [
@@ -30,6 +31,12 @@
     },
     "pageslider": {
       "exports": "pageslider",
+      "depends": [
+        "jquery:$"
+      ]
+    },
+    "touchSwipe": {
+      "exports": "touchSwipe",
       "depends": [
         "jquery:$"
       ]
