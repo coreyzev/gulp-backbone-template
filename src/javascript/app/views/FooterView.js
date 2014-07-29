@@ -5,7 +5,7 @@ var App = require('../start.js'),
 module.exports = Backbone.View.extend({
     manage: true,
     template: FooterTmp,
-    //el: 'footer',
+    el: 'footer',
     events: {
         'click a': 'navClick',
         'update': 'onUpdate'

@@ -2,8 +2,6 @@ var App = require('../start.js'),
 
     SliderPageTmp = require('../templates/SliderPageView');
 
-    require('pageslider');
-
 module.exports = Backbone.View.extend({
     manage: true,
     template: SliderPageTmp,
@@ -24,11 +22,7 @@ module.exports = Backbone.View.extend({
             return {title: 'The Demo Slide' };
         }
     },
-    beforeRender: function() {
-        
-    },
     afterRender: function() {
-        App.Utils.slider = new PageSlider($('.primaryView'));
         if (this.model.id == 1) {
             App.Utils.slider.slidePageFrom(this.$el, 'left');/*
         } else if ( this.model.id + 1 == this.model.attributes.nextSlide.id) {

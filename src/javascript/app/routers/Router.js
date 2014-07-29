@@ -42,24 +42,23 @@ module.exports = Backbone.Router.extend({
         var mainLayout = App.Layouts.Instances.mainLayout = new Backbone.Layout({
             template: MainViewTmp,
             el: '.container',
-            beforeRender: function() {
-                this.insertViews({
-                    'header': new HeaderView(),
-                    '#content': new ContentView()
-                }).renderViews();
-
-                App.Utils.slider = new PageSlider($('.primaryView'));
-            },
-            afterRender: function(){
-
-            },
             addHF: function () {
                 $('.scroller-inner').prepend('<header id="header" class="bar bar-nav"></header>').append('<footer id="footer" class="bar bar-tab"></footer>');
                 $('#mp-pusher').prepend('<nav id="mp-menu" class="mp-menu"></nav>');
             },
         });
 
-        mainLayout.render();
+        mainLayout.render().promise().done(function() {
+            mainLayout.setViews({
+                'header': new HeaderView(),
+                '#content': new ContentView()
+            }).renderViews().promise().done(function() {
+                App.Utils.slider = new PageSlider($('.primaryView'));
+                mainLayout.getView('#content').setViews({
+                    '.sliderContent': new SliderPageView(homePage)
+                });
+            });
+        });
 
         App.Collections.Instances.pages = new Pages(JSON.parse(window.localStorage.getItem("pages")));
         App.collection('pages').each(function(model, index, models) {
@@ -82,7 +81,10 @@ module.exports = Backbone.Router.extend({
         });
 
         mainLayout.setView('footer', new FooterView(homePage)).render();
-        mainLayout.setView('#mp-menu', new SideNavView()).render();
+        mainLayout.setView('#mp-menu', new SideNavView()).render().promise().done(function(){
+            console.log('SN render done');
+            //mainLayout.getView('#mp-menu').buildNav();
+        });
     },
 
     linkClick: function (target, trigger) {
