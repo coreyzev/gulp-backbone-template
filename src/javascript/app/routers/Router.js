@@ -64,7 +64,7 @@ module.exports = Backbone.Router.extend({
 
         App.Collections.Instances.pages = new Pages(JSON.parse(window.localStorage.getItem("pages")));
         App.collection('pages').each(function(model, index, models) {
-            models[index].fetchChildren(models);
+            models[index].fetchChildren();
         });
     },
 

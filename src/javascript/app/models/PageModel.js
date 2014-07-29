@@ -4,6 +4,7 @@ var App = require('../start.js'),
 
 module.exports = Backbone.Model.extend({
 
+    idAttribute: 'id',
     initialize: function() {
         var model = this;
         model.set({nextSlide: {}});
@@ -15,9 +16,7 @@ module.exports = Backbone.Model.extend({
         model.save();
         App.Models.Instances[this.attributes.pageSlug] = this;
     },
-    fetchChildren: function(collection){
-        this.children = new Children();
-        this.children.parent = this;
+    fetchChildren: function(){
         var deferred = $.Deferred(),
             model = this,
             results = App.collection("pages").filter(function (element) {
@@ -29,7 +28,8 @@ module.exports = Backbone.Model.extend({
             deferred.reject();
         }
         deferred.promise().done(function(data){
-            model.children = data;
+            model.children = new Children(data);
+            model.children.parent = model;
         });
     },
     updateNextSlide: function(data) {
