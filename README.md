@@ -8,9 +8,9 @@ Includes the following tools, tasks, and workflows:
 - Browserify (with browserify-shim)
 - Watchify (caching version of browserify for super fast rebuilds)
 - Compass
-- CoffeeScript (with source mapping!)
 - jQuery (from npm)
 - Backbone (from npm)
+- BB Layout Manager 
 - Handlebars (as a backbone dependency)
 - Non common-js vendor code (like a jQuery plugin)
 - LiveReload
