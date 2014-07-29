@@ -5,6 +5,10 @@ var App = require('../start.js'),
 module.exports = Backbone.Model.extend({
 
     idAttribute: 'id',
+    defaults: {
+        hasChildren: false,
+        hasSubChildren: false
+    },
     initialize: function() {
         var model = this;
         model.set({nextSlide: {}});
@@ -30,6 +34,7 @@ module.exports = Backbone.Model.extend({
         deferred.promise().done(function(data){
             model.children = new Children(data);
             model.children.parent = model;
+            model.set({hasChildren: true});
         });
     },
     updateNextSlide: function(data) {

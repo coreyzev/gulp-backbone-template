@@ -66,6 +66,17 @@ module.exports = Backbone.Router.extend({
         App.collection('pages').each(function(model, index, models) {
             models[index].fetchChildren();
         });
+        App.collection('pages').each(function(model) {
+            if (model.attributes.hasChildren) {
+                var data = model.children.models;
+                for (var d = 0; d < data.length; d++) {
+                    if (data[d].attributes.hasChildren) {
+                        model.set({hasSubChildren: true});
+                    }
+                }
+            }
+            model.save();
+        });
     },
 
     linkClick: function (target, trigger) {

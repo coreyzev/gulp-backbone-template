@@ -71,8 +71,8 @@ module.exports = (function () {
             {id: 7, pageSlug: "lorem/consectetur/adipiscing", parentId: 6, title: "Adipiscing", template: "", postRender: "", addonIDs: []},
             {id: 8, pageSlug: "lorem/consectetur/adipiscing/elit", parentId: 7, title: "Elit", template: "", postRender: "", addonIDs: []},
             {id: 9, pageSlug: "donec", parentId: 0, title: "Donec", template: "", postRender: "", addonIDs: []},
-            {id: 10, pageSlug: "donec/consequat", parentId: 8, title: "Consequat", template: "", postRender: "", addonIDs: []},
-            {id: 11, pageSlug: "donec/consequat/imperdiet", parentId: 9, title: "Imperdiet", template: "", postRender: "", addonIDs: []}
+            {id: 10, pageSlug: "donec/consequat", parentId: 9, title: "Consequat", template: "", postRender: "", addonIDs: []},
+            {id: 11, pageSlug: "donec/consequat/imperdiet", parentId: 10, title: "Imperdiet", template: "", postRender: "", addonIDs: []}
         ]
     ));
 
