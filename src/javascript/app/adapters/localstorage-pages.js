@@ -63,6 +63,7 @@ module.exports = (function () {
     window.localStorage.setItem("pages", JSON.stringify(
         [
             {id: 1, pageSlug: "home", parentId: 0, title: "The Home Page", template: "", postRender: "", addonIDs: []},
+
             {id: 2, pageSlug: "lorem", parentId: 0, title: "Lorem", template: "", postRender: "", addonIDs: []},
             {id: 3, pageSlug: "lorem/dolor", parentId: 2, title: "Dolor", template: "", postRender: "", addonIDs: []},
             {id: 4, pageSlug: "lorem/dolor/sit", parentId: 3, title: "Sit", template: "", postRender: "", addonIDs: []},
@@ -70,9 +71,16 @@ module.exports = (function () {
             {id: 6, pageSlug: "lorem/consectetur", parentId: 2, title: "Consectetur", template: "", postRender: "", addonIDs: []},
             {id: 7, pageSlug: "lorem/consectetur/adipiscing", parentId: 6, title: "Adipiscing", template: "", postRender: "", addonIDs: []},
             {id: 8, pageSlug: "lorem/consectetur/adipiscing/elit", parentId: 7, title: "Elit", template: "", postRender: "", addonIDs: []},
+
             {id: 9, pageSlug: "donec", parentId: 0, title: "Donec", template: "", postRender: "", addonIDs: []},
             {id: 10, pageSlug: "donec/consequat", parentId: 9, title: "Consequat", template: "", postRender: "", addonIDs: []},
-            {id: 11, pageSlug: "donec/consequat/imperdiet", parentId: 10, title: "Imperdiet", template: "", postRender: "", addonIDs: []}
+            {id: 11, pageSlug: "donec/consequat/imperdiet", parentId: 10, title: "Imperdiet", template: "", postRender: "", addonIDs: []},
+
+            {id: 12, pageSlug: "sodales", parentId: 0, title: "Sodales", template: "", postRender: "", addonIDs: []},
+
+            {id: 13, pageSlug: "mauris", parentId: 0, title: "Mauris", template: "", postRender: "", addonIDs: []},
+
+            {id: 14, pageSlug: "rhoncus", parentId: 0, title: "Rhoncus", template: "", postRender: "", addonIDs: []},
         ]
     ));
 

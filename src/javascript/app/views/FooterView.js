@@ -9,11 +9,6 @@ module.exports = Backbone.View.extend({
         'click a': 'navClick',
         'update': 'onUpdate'
     },
-    serialize: function() {
-        if (this.model) {
-            return this.model.toJSON() ;
-        }
-    },
     initialize: function(options) {
         this.undelegateEvents();
         if (!this.options.DNE) {
@@ -21,6 +16,20 @@ module.exports = Backbone.View.extend({
         } else {
             this.activeTab = false;
         }
+    },
+    serialize: function() {
+        var data = {};
+        data["nav"] = [];
+        App.collection("pages").each(function(model) {
+            if (model.attributes.parentId === 0 && model.id > 1) {
+                var y = model.attributes;
+                data["nav"].push({hash: y.pageSlug, title: y.title});
+            }
+        });
+        if (this.model) {
+            data["model"] = this.model.toJSON();
+        }
+        return data;
     },
     afterRender: function() {
         this.makeActive(this.activeTab);

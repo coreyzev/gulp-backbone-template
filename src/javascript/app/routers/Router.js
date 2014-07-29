@@ -51,9 +51,7 @@ module.exports = Backbone.Router.extend({
         mainLayout.render().promise().done(function() {
             mainLayout.setViews({
                 'header': new HeaderView(),
-                '#content': new ContentView(),
-                'footer': new FooterView(homePage),
-                '#mp-menu': new SideNavView()
+                '#content': new ContentView()
             }).renderViews().promise().done(function() {
                 App.Utils.slider = new PageSlider($('.primaryView'));
                 mainLayout.getView('#content').setViews({
@@ -81,6 +79,9 @@ module.exports = Backbone.Router.extend({
             }
             model.save();
         });
+
+        mainLayout.setView('footer', new FooterView(homePage)).render();
+        mainLayout.setView('#mp-menu', new SideNavView()).render();
     },
 
     linkClick: function (target, trigger) {

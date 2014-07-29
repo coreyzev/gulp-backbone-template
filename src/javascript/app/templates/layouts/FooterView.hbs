@@ -1,7 +1,4 @@
-<a class="tab-item active" href="#">Home</a>
-<a class="tab-item" href="#lorem">Lorem</a>
-<a class="tab-item" href="#lorem/consectetur">Consectetur</a>
-<a class="tab-item" href="#donec">Donec</a>
-<a class="tab-item" href="#amet">Amet</a>
-
-<a class="tab-item next" {{#if nextSlide}}href="#{{nextSlide.slug}}">{{nextSlide.title}} <span class="icon icon-right-nav"></span>{{else}}data-bypass="true">{{/if}}</a>
+{{#each nav}}
+	<a class="tab-item" href="#{{hash}}">{{title}}</a>
+{{/each}}
+<a class="tab-item next" {{#if model.nextSlide}}href="#{{model.nextSlide.slug}}">{{model.nextSlide.title}} <span class="icon icon-right-nav"></span>{{else}}data-bypass="true">{{/if}}</a>
