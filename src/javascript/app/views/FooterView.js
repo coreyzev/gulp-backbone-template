@@ -3,6 +3,7 @@ var App = require('../start.js'),
     FooterTmp = require('../templates/layouts/FooterView');
 
 module.exports = Backbone.View.extend({
+    manage: true,
     template: FooterTmp,
     el: 'footer',
     events: {

@@ -1,17 +1,23 @@
 var App = require('../start.js'),
 
     //Child Views
-    ParentWrapper = require('./SideNavParentWrapper'),
-    InnerParent = require('./SideNavInnerParent'),
-    NavChild = require('./SideNavChild'),
+    ParentWrapper = App.Views.ParentWrapper = require('./SideNavParentWrapper'),
+    InnerParent = App.Views.InnerParent = require('./SideNavInnerParent'),
+    NavChild = App.Views.NavChild = require('./SideNavChild'),
+
+    Pages = require('../collections/PagesCollection'),
 
     SideNavTmp = require('../templates/layouts/SideNavView');
 
-module.exports = Backbone.View.extend({
+module.exports = Backbone.Layout.extend({
+    manage: true,
     template: SideNavTmp,
     el: '#mp-menu',
     events: {
         'click a': 'navClick'
+    },
+    initialize: function() {
+        this.collection = App.collection("pages");
     },
     serialize: {},
     navClick: function(e) {
@@ -20,30 +26,33 @@ module.exports = Backbone.View.extend({
         App.router("router").linkClick(target, true);
         console.log("navigate");
     },
-    buildNav: function(){
+    beforeRender: function() {
         var layout = this;
-        App.collection("pages").each(function(model) {
+        this.collection.each(function(model, index, context) {
             if (model.attributes.parentId === 0 && model.id > 1) {
                 var y = model.toJSON();
+                var data = this.collection.filter(function (elem) {
+                    return model.id === elem.attributes.parentId;
+                });
+                data = new Pages(data);;
                 if (y.hasChildren) {
-                    layout.setView(new ParentWrapper({serialize: y})).render();
-                    console.log("debug parent wrapper");
+                    this.insertView('.table-view', new InnerParent({model:model, serialize: y, collection: data})).render();
                 } else {
-                    layout.setView(new NavChild({serialize: y})).render();
-                    console.log("debug nav child");
+                    this.insertView('.table-view', new NavChild({serialize: y})).render();
                 }
             }
-        });
+        }, this);
     },
     afterRender: function() {
-        this.buildNav();
+        console.log('after render');
+        //this.buildNav();
         require('sidebars');
         new mlPushMenu(
             document.getElementById('mp-menu'),
             document.getElementById('nav-trigger')
         );
         if ($('#mp-pusher').hasClass('mp-pushed')) {
-            $('#mp-pusher').click().promise().done(function(){
+            $('#mp-pusher').click().promise().done(function() {
                 if ($('#mp-pusher').hasClass('mp-pushed')) {
                     var touch = document.createEvent('TouchEvent');
                     touch.initTouchEvent('touchstart', true, true);

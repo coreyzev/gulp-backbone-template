@@ -81,7 +81,10 @@ module.exports = Backbone.Router.extend({
         });
 
         mainLayout.setView('footer', new FooterView(homePage)).render();
-        mainLayout.setView('#mp-menu', new SideNavView()).render();
+        mainLayout.setView('#mp-menu', new SideNavView()).render().promise().done(function(){
+            console.log('SN render done');
+            //mainLayout.getView('#mp-menu').buildNav();
+        });
     },
 
     linkClick: function (target, trigger) {

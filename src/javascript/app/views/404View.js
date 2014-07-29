@@ -3,6 +3,7 @@ var App = require('../start.js'),
     DNEViewTmp = require('../templates/404View');
 
 module.exports = Backbone.View.extend({
+    manage: true,
     template: DNEViewTmp,
     initialize: function () {
 

@@ -3,6 +3,7 @@ var App = require('../start.js'),
     SliderPageTmp = require('../templates/SliderPageView');
 
 module.exports = Backbone.View.extend({
+    manage: true,
     template: SliderPageTmp,
     initialize: function () {
         if(this.model) {

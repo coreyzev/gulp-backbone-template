@@ -1,28 +1,19 @@
 var App = require('../start.js'),
 
     //Child Views
-    ParentWrapper = require('./SideNavParentWrapper'),
+    //ParentWrapper = require('./SideNavParentWrapper'),
 
     InnerParentTmp = require('../templates/SideNavInnerParent');
 
-module.exports = Backbone.View.extend({
+module.exports = Backbone.Layout.extend({
+    manage: true,
     template: InnerParentTmp,
-    el: 'li',
+    tagName: 'li',
     className: 'icon icon-left-nav',
-    serialize: {},
-    buildNav: function(){
-        /*
-        var layout = this;
-        App.collection("pages").each(function(model) {
-            if (model.attributes.parentId === 0 && model.id > 1) {
-                var y = model.attributes;
-                if (y.hasChildren) {
-                    layout.setView(new ParentWrapper(y.toJson()));
-
-                }
-                data["nav"].push({hash: y.pageSlug, title: y.title});
-            }
-        });
-        */
+    serialize: function() {
+        return this.model.toJSON();
+    },
+    beforeRender: function() {
+        this.insertView(new App.Views.ParentWrapper({model: this.model, collection: this.collection})).render();
     }
 });

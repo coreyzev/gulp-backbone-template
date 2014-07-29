@@ -4,26 +4,29 @@ var App = require('../start.js'),
     InnerParent = require('./SideNavInnerParent'),
     NavChild = require('./SideNavChild'),
 
+    Pages = require('../collections/PagesCollection'),
+
     ParentWrapperTmp = require('../templates/SideNavParentWrapper');
 
-module.exports = Backbone.View.extend({
+module.exports = Backbone.Layout.extend({
+    manage: true,
     template: ParentWrapperTmp,
-    el: 'div',
+    tagName: 'div',
     className: 'mp-level',
-    serialize: {},
-    buildNav: function(){
-        /*
-        var layout = this;
-        App.collection("pages").each(function(model) {
-            if (model.attributes.parentId === 0 && model.id > 1) {
-                var y = model.attributes;
-                if (y.hasChildren) {
-                    layout.setView(new ParentWrapper(y.toJson()));
-
-                }
-                data["nav"].push({hash: y.pageSlug, title: y.title});
+    serialize: function() {
+        if (this.model) {
+            return this.model.toJSON();
+        }
+    },
+    beforeRender: function() {
+        this.collection.each(function(model){
+            var y = model.toJSON();
+            if (y.hasChildren) {
+                var data = new Pages(model.children.models);
+                this.insertView('.table-view', new InnerParent({model: model, serialize: y, collection: data})).render();
+            } else {
+                this.insertView('.table-view', new NavChild({serialize: y})).render();
             }
-        });
-        */
+        }, this);
     }
 });
