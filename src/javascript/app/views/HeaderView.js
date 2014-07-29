@@ -5,7 +5,7 @@ var App = require('../start.js'),
 module.exports = Backbone.View.extend({
     manage: true,
     template: HeaderTmp,
-    el: 'header',
+    //el: 'header',
     events: {
         
     },

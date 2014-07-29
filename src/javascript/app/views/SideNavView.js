@@ -12,7 +12,7 @@ var App = require('../start.js'),
 module.exports = Backbone.Layout.extend({
     manage: true,
     template: SideNavTmp,
-    el: '#mp-menu',
+    //el: '#mp-menu',
     events: {
         'click a': 'navClick'
     },
@@ -34,7 +34,7 @@ module.exports = Backbone.Layout.extend({
                 var data = this.collection.filter(function (elem) {
                     return model.id === elem.attributes.parentId;
                 });
-                data = new Pages(data);;
+                data = new Pages(data);
                 if (y.hasChildren) {
                     this.insertView('.table-view', new InnerParent({model:model, serialize: y, collection: data})).render();
                 } else {

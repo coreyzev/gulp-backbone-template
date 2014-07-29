@@ -8,11 +8,11 @@ require('pageslider');
 
 module.exports = Backbone.Layout.extend({
     template: ContentTmp,
-    el: '#content',
+    //el: '#content',
     events: {
         
     },
-    serialize: {},
-    afterRender: function() {
+    beforeRender: function() {
+        this.insertView('.sliderContent', new SliderPageView({model: App.model('home')})).render();
     }
 });
