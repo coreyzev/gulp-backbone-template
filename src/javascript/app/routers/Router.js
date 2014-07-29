@@ -70,8 +70,12 @@ module.exports = Backbone.Router.extend({
             if (model.attributes.hasChildren) {
                 var data = model.children.models;
                 for (var d = 0; d < data.length; d++) {
+                    data[d].set({parent: {pageSlug: model.attributes.pageSlug, title: model.attributes.title}});
                     if (data[d].attributes.hasChildren) {
                         model.set({hasSubChildren: true});
+                        data[d].children.models.forEach(function(childModel) {
+                            childModel.set({parent: {pageSlug: data[d].attributes.pageSlug, title: data[d].attributes.title}});
+                        });
                     }
                 }
             }

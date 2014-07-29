@@ -12,7 +12,30 @@ module.exports = Backbone.View.extend({
         this.companyName = "AppTastic";
     },
     serialize: function() {
-        return this;
+        var data = {};
+        if (this.model) {
+            data["crumbs"] = {};
+            if (this.model.attributes.parent ) {
+                var parent = this.model.attributes.parent;
+                
+
+                if (App.model(parent.pageSlug).attributes.parent) {
+                    var grandpa = App.model(parent.pageSlug).attributes.parent;
+                    
+                    if (App.model(grandpa.pageSlug).attributes.parent) {
+                        var greatGran = App.model(grandpa.pageSlug).attributes.parent;
+                        data["crumbs"]["greatGran"] = {hash: greatGran.pageSlug, title: greatGran.title};
+                    }
+
+                    data["crumbs"]["grandpa"] = {hash: grandpa.pageSlug, title: grandpa.title};
+                }
+
+                data["crumbs"]["parent"] = {hash: parent.pageSlug, title: parent.title};
+            }
+            data["crumbs"]["title"] = {title: this.model.attributes.title};
+        }
+        data["companyName"] = this.companyName;
+        return data;
     },
     afterRender: function() {
     }
