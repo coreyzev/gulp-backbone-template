@@ -13,7 +13,7 @@ module.exports = Backbone.View.extend({
     },
     serialize: function() {
         var data = {};
-        if (this.model) {
+        if (this.model && this.model.id > 1) {
             data["crumbs"] = {};
             if (this.model.attributes.parent ) {
                 var parent = this.model.attributes.parent;

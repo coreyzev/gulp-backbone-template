@@ -90,11 +90,17 @@ header.bar {
 			vertical-align: middle;
 		}
 
-		h5 {
-			line-height: 16px;
-			display: inline;
-			text-transform: uppercase;
-			font-weight: 400;
+		a {
+			&.active {
+				color: #000;
+			}
+
+			h5 {
+				line-height: 16px;
+				display: inline;
+				text-transform: uppercase;
+				font-weight: 400;
+			}
 		}
 	}
 }

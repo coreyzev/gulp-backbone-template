@@ -2,9 +2,11 @@
 	<span class="icon icon-bars"></span>
 </button>
 <a href="#"><h1 class="title">{{#if titleImage}}<!--title image will go here-->{{else}}{{companyName}}{{/if}}</h1></a>
-<div class="breadcrumbs">
-	{{#each crumbs}}
-		<span class="icon icon-left"></span>
-		<a {{#if hash}}href="#{{hash}}"{{/if}}><h5>{{title}}</h5></a>
-	{{/each}}
-</div>
+{{#if crumbs}}
+	<div class="breadcrumbs">
+		{{#each crumbs}}
+			<span class="icon icon-left"></span>
+			<a {{#if hash}}href="#{{hash}}" {{else}}class="active"{{/if}}><h5>{{title}}</h5></a>
+		{{/each}}
+	</div>
+{{/if}}
