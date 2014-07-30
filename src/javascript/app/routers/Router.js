@@ -32,7 +32,7 @@ module.exports = Backbone.Router.extend({
 
         document.title = "CZ Updated Backbone App";
 
-        Backbone.Layout.configure({
+        Backbone.Layout.extend({
             manage: true,
             el: true
         });
