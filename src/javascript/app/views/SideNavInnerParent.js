@@ -14,6 +14,6 @@ module.exports = Backbone.Layout.extend({
         return this.model.toJSON();
     },
     beforeRender: function() {
-        this.insertView(new App.Views.ParentWrapper({model: this.model, collection: this.collection})).render();
+        this.insertView( new App.Views.ParentWrapper({model: this.model, collection: this.collection})).render();
     }
 });

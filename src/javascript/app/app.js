@@ -1,5 +1,5 @@
 	$ = jQuery = require('jquery');
-	$.fn.swipe = require('touchSwipe');
+	touchSwipe = require('touchSwipe');
 	_ = require('underscore');
 	Backbone = require('backbone');
 	Backbone.$ = require('jquery');

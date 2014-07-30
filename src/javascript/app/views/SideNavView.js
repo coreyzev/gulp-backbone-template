@@ -44,8 +44,6 @@ module.exports = Backbone.Layout.extend({
         }, this);
     },
     afterRender: function() {
-        console.log('after render');
-        //this.buildNav();
         require('sidebars');
         new mlPushMenu(
             document.getElementById('mp-menu'),
