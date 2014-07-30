@@ -7,6 +7,8 @@ window.PageSlider = function (container) {
 
     var container = container,
         currentPage,
+        prevPage,
+        deletePage,
         stateHistory = [];
 
     this.back = function() {
@@ -31,47 +33,55 @@ window.PageSlider = function (container) {
     };
 
     // Use this function if you want PageSlider to automatically determine the sliding direction based on the state history
-    this.slidePage = function(page) {
+    this.slidePage = function(page, nextPage, pageView, nextPageView) {
 
         switch (this.state()) {
             case "start":
-                this.slidePageFrom(page);
+                this.slidePageFrom(page, nextPage, pageView, nextPageView);
                 break;
             case "back":
-                this.slidePageFrom(page, 'left');
+                this.slidePageFrom(page, nextPage, pageView, nextPageView, 'left');
                 break;
             default:
-                this.slidePageFrom(page, 'right');
+                this.slidePageFrom(page, nextPage, pageView, nextPageView, 'right');
                 break;
             }
 
     };
 
     // Use this function directly if you want to control the sliding direction outside PageSlider
-    this.slidePageFrom = function(page, from) {
+    this.slidePageFrom = function(page, nextPage, pageView, nextPageView, from) {
+
+        if (currentPage == page) return;
+
+        console.log('run PS SPF');
 
         container.append(page);
 
         if (!currentPage || !from) {
-            page.attr("class", "page center");
             currentPage = page;
+            currentPage.removeClass('right left').addClass('center');
             stateHistory.push(window.location.hash);
+            deletePage = prevPage = currentPage;
             return;
         }
 
         // Position the page at the starting position of the animation
-        page.attr("class", "page " + from);
+        page.removeClass("center left right").addClass(from);
 
-        currentPage.one('webkitTransitionEnd', function(e) {
-            $(e.target).remove();
-        });
+        if (nextPage) {
+            container.append(nextPage);
+            nextPage.removeClass("center left right").addClass(from);
+        }
 
         // Force reflow. More information here: http://www.phpied.com/rendering-repaint-reflowrelayout-restyle/
         container[0].offsetWidth;
 
         // Position the new page and the current page at the ending position of their animation with a transition class indicating the duration of the animation
-        page.attr("class", "page transition center");
-        currentPage.attr("class", "page transition " + (from === "left" ? "right" : "left"));
+        page.removeClass(from).addClass('transition center');
+        currentPage.removeClass("center").addClass('transition' + from === "left" ? "right" : "left");
+        prevPage ? deletePage = prevPage : deletePage = undefined;
+        prevPage = currentPage;
         currentPage = page;
     };
 
