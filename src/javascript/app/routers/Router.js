@@ -32,12 +32,9 @@ module.exports = Backbone.Router.extend({
 
         document.title = "CZ Updated Backbone App";
 
-        App.Models.Instances.home = new Page({ pageSlug: "home" });
-        var homePage = { model: App.model("home") };
-
         Backbone.Layout.configure({
             manage: true,
-            el: false
+            el: true
         });
         var mainLayout = App.Layouts.Instances.mainLayout = new Backbone.Layout({
             template: MainViewTmp,
@@ -45,19 +42,7 @@ module.exports = Backbone.Router.extend({
             addHF: function () {
                 $('.scroller-inner').prepend('<header id="header" class="bar bar-nav"></header>').append('<footer id="footer" class="bar bar-tab"></footer>');
                 $('#mp-pusher').prepend('<nav id="mp-menu" class="mp-menu"></nav>');
-            },
-        });
-
-        mainLayout.render().promise().done(function() {
-            mainLayout.setViews({
-                'header': new HeaderView(),
-                '#content': new ContentView()
-            }).renderViews().promise().done(function() {
-                App.Utils.slider = new PageSlider($('.primaryView'));
-                mainLayout.getView('#content').setViews({
-                    '.sliderContent': new SliderPageView(homePage)
-                });
-            });
+            }
         });
 
         App.Collections.Instances.pages = new Pages(JSON.parse(window.localStorage.getItem("pages")));
@@ -80,23 +65,55 @@ module.exports = Backbone.Router.extend({
             model.save();
         });
 
-        mainLayout.setView('footer', new FooterView(homePage)).render();
-        mainLayout.setView('#mp-menu', new SideNavView()).render().promise().done(function(){
-            console.log('SN render done');
-            //mainLayout.getView('#mp-menu').buildNav();
+        mainLayout.render().promise().done(function() {
+            mainLayout.setViews({
+                'header': new HeaderView(),
+                '#content': new ContentView()
+            }).renderViews().promise().done(function() {
+                App.Utils.slider = new PageSlider($('.primaryView'));
+                //mainLayout.getView('#content').insertView('.sliderContent', new SliderPageView({ model: App.model('home'), activeSlide: true}));
+            });
+        });
+
+        mainLayout.setView('footer', new FooterView({ model: App.model('home')})).render();
+        mainLayout.setView('#mp-menu', new SideNavView()).render();
+
+        $(window).swipe({
+            swipeLeft: function() {
+                App.router('router').swipeForward.apply(this,arguments);
+            },
+            swipeRight: function() {
+                App.router('router').swipeBack.apply(this,arguments);
+            },
+            threshold:300
         });
     },
-
+    go: function() {
+        var destination = _.toArray(arguments).join("/");
+        if (destination !== "home") {
+            return this.navigate(destination, true);
+        }
+    },
+    swipeForward: function (event, direction, distance, duration, fingerCount, fingerData) {
+        if (fingerData[0].start.x > (document.body.clientWidth - 50)) {
+            return App.router('router').go($('a.next')[0].hash.slice(1));
+        }
+    },
+    swipeBack: function (event, direction, distance, duration, fingerCount, fingerData) {
+        if (fingerData[0].start.x < 50 ) {
+            return window.history.back();
+        }
+    },
     linkClick: function (target, trigger) {
         //Filter a link clicks
         if ($(target).data("bypass")) {
             if (target.href !== "") {
                 // If the target has "data-bypass=true" & the href isnt empty
-                window.location.href = target.href;
+                return window.location.href = target.href;
             }
         } else {
             // else navigate using the backbone app
-            this.navigate(target.hash, true);
+            return this.navigate(target.hash, true);
         }
     },
 
@@ -105,7 +122,7 @@ module.exports = Backbone.Router.extend({
     },
 
     page: function(slug1, slug2, slug3, slug4) {
-        // Please god one day make these breadcrumbs less sucky (see: localstorage-pages.js)
+        // Please god one day make these pageSlugs less sucky (see: localstorage-pages.js)
         var slug = slug1;
         for (var s = 1; s < arguments.length; s++) {
             if (arguments[s]) {
@@ -119,12 +136,25 @@ module.exports = Backbone.Router.extend({
             //Remove the views from the DOM & stop listening to events
             layout.removeView('header');
             layout.removeView('footer');
-            layout.getView('#content').removeView('.sliderContent');
             layout.removeView('#mp-menu');
             //Add back in the missing elements
             layout.addHF();
             //Insert & render the views with the new data
-            layout.getView('#content').setView('.sliderContent', new SliderPageView({ model: page })).render();
+            var slide, nextSlide, oldPages;
+            if (App.view(slug)) {
+                layout.getView('#content').getView('.sliderContent').stopListening();
+                slide = App.view(slug);
+                if (slide.options.nextPage) {
+                    nextSlide = slide.options.nextPage;
+                    nextSlide.render();
+                    nextSlide.options.activeSlide = true;
+                    App.Utils.slider.slidePage(slide.$el, nextSlide.$el, slide, nextSlide);
+                } else {
+                    App.Utils.slider.slidePage(slide.$el, false, slide, false);
+                }
+            } else {
+                layout.getView('#content').insertView('.sliderContent', new SliderPageView({ model: page, activeSlide: true })).render();
+            }
             layout.setView('header', new HeaderView({ model: page })).render();
             layout.setView('footer', new FooterView({ model: page })).render();
             layout.setView('#mp-menu', new SideNavView({ model: page })).render();
@@ -139,10 +169,10 @@ module.exports = Backbone.Router.extend({
         //Same as in the "page" function
         layout.removeView('header');
         layout.removeView('footer');
-        layout.getView('#content').removeView('.sliderContent');
+        layout.getView('#content').getView('.sliderContent').stopListening();
         layout.removeView('#mp-menu');
         layout.addHF();
-        layout.getView('#content').setView('.sliderContent', new DNEView({ wrongHash: wrongHash })).render();
+        layout.getView('#content').insertView('.sliderContent', new DNEView({ wrongHash: wrongHash })).render();
         layout.setView('header', new HeaderView({ DNE: true })).render();
         layout.setView('footer', new FooterView({ DNE: true })).render();
         layout.setView('#mp-menu', new SideNavView({ DNE: true })).render();
