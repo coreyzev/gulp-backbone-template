@@ -1,225 +1,330 @@
-/*!
- * =====================================================
- * Ratchet v2.0.2 (http://goratchet.com)
- * Copyright 2014 Connor Sears
- * Licensed under MIT (https://github.com/twbs/ratchet/blob/master/LICENSE)
- *
- * v2.0.2 designed by @connors.
- * =====================================================
- */
+@import "mixins.scss";
 
+//
+// iOS theme
+// Visuals and interactions in the style of iOS
+//
+// --------------------------------------------------
+
+
+// Variables
+// --------------------------------------------------
+
+// Colors
+//
+// Main theme colors
+$primary-color:  #007aff !global;
+$chrome-color:   rgba(247,247,247,.98) !global;
+
+// Action colors
+$default-color:  #929292 !global;
+$positive-color: #4cd964 !global;
+$negative-color: #dd524d !global;
+
+// Bars
+$bar-base-height: 44px !global;
+$bar-tab-height:  50px !global;
+
+// iOS style transitions
+$timing-fuction: cubic-bezier(.1, .5, .1, 1) !global; // Inspired by @c2prods
+
+
+// Base
+// --------------------------------------------------
+
+// Universal link styling
 a {
-  color: #007aff;
-}
-a:active {
-  color: #0062cc;
+  color: $primary-color;
+
+  &:active {
+    color: darken($primary-color, 10%);
+  }
 }
 
+// Content
 .content {
   background-color: #efeff4;
 }
+
+
+// Typography
+// --------------------------------------------------
 
 .h5, h5,
 .h6, h6,
 p {
   color: #8f8f94;
 }
-
 .h5, h5,
 .h6, h6 {
   font-weight: normal;
   text-transform: uppercase;
 }
 
+
+// Buttons
+// --------------------------------------------------
+
 .btn {
-  color: #929292;
-  background-color: rgba(247, 247, 247, .98);
-  border: 1px solid #929292;
-  -webkit-transition: all;
-     -moz-transition: all;
-          transition: all;
-  -webkit-transition-timing-function: linear;
-     -moz-transition-timing-function: linear;
-          transition-timing-function: linear;
-  -webkit-transition-duration: .2s;
-     -moz-transition-duration: .2s;
-          transition-duration: .2s;
-}
-.btn:active, .btn.active {
-  color: #fff;
-  background-color: #929292;
+  color: $default-color;
+  background-color: $chrome-color;
+  border: 1px solid $default-color;
+  @include transition(all);
+  @include transition-duration(.2s);
+  @include transition-timing-function(linear);
+
+  // Active & filled button styles
+  &:active,
+  &.active {
+    color: #fff;
+    background-color: $default-color;
+  }
 }
 
+
+// Other button types
+// --------------------------------------------------
+
+// Primary button (Default color is blue)
 .btn-primary {
   color: #fff;
-  background-color: #007aff;
-  border: 1px solid #007aff;
-}
-.btn-primary:active, .btn-primary.active {
-  background-color: #0062cc;
-  border: 1px solid #0062cc;
+  background-color: $primary-color;
+  border: 1px solid $primary-color;
+
+  &:active,
+  &.active {
+    background-color: darken($primary-color, 10%);
+    border: 1px solid darken($primary-color, 10%);
+  }
 }
 
+// Positive button (Default color is green)
 .btn-positive {
   color: #fff;
-  background-color: #4cd964;
-  border: 1px solid #4cd964;
-}
-.btn-positive:active, .btn-positive.active {
-  background-color: #2ac845;
-  border: 1px solid #2ac845;
+  background-color: $positive-color;
+  border: 1px solid $positive-color;
+
+  &:active,
+  &.active {
+    background-color: darken($positive-color, 10%);
+    border: 1px solid darken($positive-color, 10%);
+  }
 }
 
+// Negative button (Default color is red)
 .btn-negative {
   color: #fff;
-  background-color: #dd524d;
-  border: 1px solid #dd524d;
-}
-.btn-negative:active, .btn-negative.active {
-  background-color: #cf2d28;
-  border: 1px solid #cf2d28;
+  background-color: $negative-color;
+  border: 1px solid $negative-color;
+
+  &:active,
+  &.active {
+    background-color: darken($negative-color, 10%);
+    border: 1px solid darken($negative-color, 10%);
+  }
 }
 
+// Outlined buttons
 .btn-outlined {
   background-color: transparent;
-}
-.btn-outlined.btn-primary {
-  color: #007aff;
-}
-.btn-outlined.btn-positive {
-  color: #4cd964;
-}
-.btn-outlined.btn-negative {
-  color: #dd524d;
-}
-.btn-outlined.btn-primary:active, .btn-outlined.btn-positive:active, .btn-outlined.btn-negative:active {
-  color: #fff;
+
+  &.btn-primary {
+    color: $primary-color;
+  }
+  &.btn-positive {
+    color: $positive-color;
+  }
+  &.btn-negative {
+    color: $negative-color;
+  }
+  // Active states
+  &.btn-primary:active,
+  &.btn-positive:active,
+  &.btn-negative:active {
+    color: #fff;
+  }
 }
 
+// Link button (Buttons that look like links)
 .btn-link {
-  color: #007aff;
+  color: $primary-color;
   background-color: transparent;
   border: none;
-}
-.btn-link:active, .btn-link.active {
-  color: #0062cc;
-  background-color: transparent;
+
+  &:active,
+  &.active {
+    color: darken($primary-color, 10%);
+    background-color: transparent;
+  }
 }
 
-.btn .badge {
-  background-color: rgba(0, 0, 0, .15);
-}
-.btn .badge.badge-inverted {
-  background-color: transparent;
-}
-.btn:active .badge {
-  color: #fff;
+// Buttons with badges
+.btn {
+  .badge {
+    background-color: rgba(0,0,0,.15);
+
+    &.badge-inverted {
+      background-color: transparent;
+    }
+  }
+
+  // Active states
+  &:active .badge {
+    color: #fff;
+  }
 }
 
+
+// Bars
+// --------------------------------------------------
+
+// Default bar
 .bar {
-  background-color: rgba(247, 247, 247, .98);
+  background-color: $chrome-color;
   border-bottom: 0;
-  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .85);
-          box-shadow: 0 0 1px rgba(0, 0, 0, .85);
-}
-.bar.bar-header-secondary {
-  top: 44px;
-}
-.bar.bar-footer-secondary {
-  bottom: 44px;
-}
-.bar.bar-footer-secondary-tab {
-  bottom: 50px;
-}
-.bar.bar-footer, .bar.bar-footer-secondary, .bar.bar-footer-secondary-tab {
-  border-top: 0;
+  @include box-shadow(0 0 1px rgba(0,0,0,.85));
+
+  // Modifier class to dock any bar below .bar-nav
+  &.bar-header-secondary {
+    top: $bar-base-height;
+  }
+
+  // Modifier class to dock any bar above a standard bar
+  &.bar-footer-secondary {
+    bottom: $bar-base-height;
+  }
+
+  // Modifier class to dock any bar above a .bar-tab
+  &.bar-footer-secondary-tab {
+    bottom: $bar-tab-height;
+  }
+  // Give the footers the correct border
+  &.bar-footer,
+  &.bar-footer-secondary,
+  &.bar-footer-secondary-tab {
+    border-top: 0;
+  }
 }
 
+// Tab bar
 .bar-tab {
   border-top: 0;
 }
-
 .tab-item {
   color: #929292;
-}
-.tab-item.active, .tab-item:active {
-  color: #007aff;
+
+  // Active states for the tab bar
+  &.active,
+  &:active {
+    color: $primary-color;
+  }
 }
 
-.bar-nav .btn-link {
-  color: #007aff;
-}
-.bar-nav .btn-link:active {
-  color: #007aff;
-  opacity: .6;
+// Nav bars with buttons
+.bar-nav {
+  // Link buttons in nav bars
+  .btn-link {
+    color: $primary-color;
+
+    &:active {
+      color: $primary-color;
+      opacity: .6;
+    }
+  }
 }
 
-.badge.badge-inverted {
-  color: #929292;
-  background-color: transparent;
+
+
+// Badges
+// --------------------------------------------------
+
+.badge {
+  &.badge-inverted {
+    color: $default-color;
+    background-color: transparent;
+  }
 }
 
+
+// Badge modifiers
+//
+// Main badge
 .badge-primary {
   color: #fff;
-  background-color: #007aff;
-}
-.badge-primary.badge-inverted {
-  color: #007aff;
-  background-color: transparent;
+  background-color: $primary-color;
+
+  &.badge-inverted {
+    color: $primary-color;
+    background-color: transparent;
+  }
 }
 
+// Positive badge
 .badge-positive {
   color: #fff;
-  background-color: #4cd964;
-}
-.badge-positive.badge-inverted {
-  color: #4cd964;
-  background-color: transparent;
+  background-color: $positive-color;
+
+  &.badge-inverted {
+    color: $positive-color;
+    background-color: transparent;
+  }
 }
 
+// Negative badge
 .badge-negative {
   color: #fff;
-  background-color: #dd524d;
-}
-.badge-negative.badge-inverted {
-  color: #dd524d;
-  background-color: transparent;
+  background-color: $negative-color;
+
+  &.badge-inverted {
+    color: $negative-color;
+    background-color: transparent;
+  }
 }
 
+
+// Cards
+// --------------------------------------------------
+
+// Cards with table-views
 .card .table-view {
   background-image: none;
 }
-
 .card .table-view-cell:last-child {
   background-image: none;
 }
 
+// Table views
+// --------------------------------------------------
+
 .table-view {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='1'><rect fill='#c8c7cc' x='0' y='0' width='100%' height='0.5'/></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='1'><rect fill='#c8c7cc' x='0' y='0' width='100%' height='0.5'/></svg>");
-  background-repeat: no-repeat;
-  background-position: 0 100%, 0 0;
   border-top: 0;
   border-bottom: 0;
+  @include hairline(double, #c8c7cc, 0); // Double grey border.
+
+  .table-view-cell {
+    border-bottom: 0;
+    @include hairline(single, #c8c7cc, 15px); // Single grey border with 15px offset.
+
+    // Remove the border from the last table view item
+    &:last-child {
+      background-image: none;
+    }
+    > a:not(.btn):active {
+      color: inherit;
+    }
+  }
+
+  // Table view dividers
+  .table-view-divider {
+    border-top: 0;
+    border-bottom: 0;
+    @include hairline(double, #c8c7cc, 0);  // Double (top and bottom) grey border with no offset.
+  }
 }
-.table-view .table-view-cell {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='1'><rect fill='#c8c7cc' x='0' y='0' width='100%' height='0.5'/></svg>");
-  background-repeat: no-repeat;
-  background-position: 15px 100%;
-  border-bottom: 0;
-}
-.table-view .table-view-cell:last-child {
-  background-image: none;
-}
-.table-view .table-view-cell > a:not(.btn):active {
-  color: inherit;
-}
-.table-view .table-view-divider {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='1'><rect fill='#c8c7cc' x='0' y='0' width='100%' height='0.5'/></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='1'><rect fill='#c8c7cc' x='0' y='0' width='100%' height='0.5'/></svg>");
-  background-repeat: no-repeat;
-  background-position: 0 100%, 0 0;
-  border-top: 0;
-  border-bottom: 0;
-}
+
+
+// Forms
+// --------------------------------------------------
 
 select,
 textarea,
@@ -243,229 +348,244 @@ input[type="color"],
   border: 1px solid rgba(0, 0, 0, .2);
 }
 
+// Rounded search input
 input[type="search"] {
   height: 34px;
   text-align: center;
-  background-color: rgba(0, 0, 0, .1);
+  background-color: rgba(0,0,0,.1);
   border: 0;
   border-radius: 6px;
 }
-
 input[type="search"]:focus {
   text-align: left;
 }
-
 select,
 textarea,
 .input-group {
   height: auto;
 }
 
+// Input groups (cluster multiple inputs together into a single group)
+// -------------------------------------------------------------------
 .input-group {
   padding: 0;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='1'><rect fill='#c8c7cc' x='0' y='0' width='100%' height='0.5'/></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='1'><rect fill='#c8c7cc' x='0' y='0' width='100%' height='0.5'/></svg>");
-  background-repeat: no-repeat;
-  background-position: 0 100%, 0 0;
   border: 0;
+  @include hairline(double, #c8c7cc, 0); // Double grey border.
 }
-
 .input-group input {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='1'><rect fill='#c8c7cc' x='0' y='0' width='100%' height='0.5'/></svg>");
-  background-repeat: no-repeat;
-  background-position: 15px 100%;
   border: 0;
+  @include hairline(single, #c8c7cc, 15px);
 }
-
+// Remove bottom border on last input to avoid double bottom border
 .input-group input:last-child {
   background-image: none;
 }
 
-.input-row {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='1'><rect fill='#c8c7cc' x='0' y='0' width='100%' height='0.5'/></svg>");
-  background-repeat: no-repeat;
-  background-position: 15px 100%;
-  border-bottom: 0;
-}
+// Input groups with labels
+// --------------------------------------------------
 
+// To use labels with input groups, wrap a label and an input in an .input-row
+.input-row {
+  border-bottom: 0;
+  @include hairline(single, #c8c7cc, 15px); // Single grey border with a 15px offset.
+}
+// Remove bottom border on last input-row to avoid double bottom border
 .input-row:last-child,
 .input-row label + input {
   background-image: none;
 }
 
+
+// Segmented controls
+// --------------------------------------------------
+
 .segmented-control {
   background-color: transparent;
-  border: 1px solid #929292;
-}
-.segmented-control .control-item {
-  color: #929292;
-  border-color: #929292;
-  -webkit-transition: background-color .1s linear;
-     -moz-transition: background-color .1s linear;
-          transition: background-color .1s linear;
-}
-.segmented-control .control-item:active {
-  background-color: #ebebeb;
-}
-.segmented-control .control-item.active {
-  color: #fff;
-  background-color: #929292;
+  border: 1px solid $default-color;
+
+  .control-item {
+    color: $default-color;
+    border-color: $default-color;
+    @include transition(background-color .1s linear);
+
+    &:active {
+      background-color: lighten($default-color, 35%);
+    }
+    &.active {
+      color: #fff;
+      background-color: $default-color;
+    }
+  }
 }
 
+// Other segmented controller types
+//
+// Primary
 .segmented-control-primary {
-  border: 1px solid #007aff;
-}
-.segmented-control-primary .control-item {
-  color: #007aff;
-  border-color: inherit;
-}
-.segmented-control-primary .control-item:active {
-  background-color: #b3d7ff;
-}
-.segmented-control-primary .control-item.active {
-  color: #fff;
-  background-color: #007aff;
+  border: 1px solid $primary-color;
+
+  .control-item {
+    color: $primary-color;
+    border-color: inherit;
+
+    &:active {
+      background-color: lighten($primary-color, 35%);
+    }
+    &.active {
+      color: #fff;
+      background-color: $primary-color;
+    }
+  }
 }
 
+// Positive
 .segmented-control-positive {
-  border: 1px solid #4cd964;
-}
-.segmented-control-positive .control-item {
-  color: #4cd964;
-  border-color: inherit;
-}
-.segmented-control-positive .control-item:active {
-  background-color: #dff8e3;
-}
-.segmented-control-positive .control-item.active {
-  color: #fff;
-  background-color: #4cd964;
+  border: 1px solid $positive-color;
+
+  .control-item {
+    color: $positive-color;
+    border-color: inherit;
+
+    &:active {
+      background-color: lighten($positive-color, 35%);
+    }
+    &.active {
+      color: #fff;
+      background-color: $positive-color;
+    }
+  }
 }
 
+// Negative
 .segmented-control-negative {
-  border: 1px solid #dd524d;
+  border: 1px solid $negative-color;
+
+  .control-item {
+    color: $negative-color;
+    border-color: inherit;
+
+    &:active {
+      background-color: lighten($negative-color, 35%);
+    }
+    &.active {
+      color: #fff;
+      background-color: $negative-color;
+    }
+  }
 }
-.segmented-control-negative .control-item {
-  color: #dd524d;
-  border-color: inherit;
-}
-.segmented-control-negative .control-item:active {
-  background-color: #fae4e3;
-}
-.segmented-control-negative .control-item.active {
-  color: #fff;
-  background-color: #dd524d;
-}
+
+
+// Popovers
+// --------------------------------------------------
 
 .popover {
   border-radius: 12px;
-  -webkit-transition: -webkit-transform .2s ease-in-out, opacity .2s ease-in-out;
-     -moz-transition: -webkit-transform .2s ease-in-out, opacity .2s ease-in-out;
-          transition: -webkit-transform .2s ease-in-out, opacity .2s ease-in-out;
-}
-.popover:before {
-  border-bottom: 15px solid rgba(247, 247, 247, .98);
+  @include transition(-webkit-transform 0.2s ease-in-out, opacity 0.2s ease-in-out);
+
+  &:before {
+    border-bottom: 15px solid $chrome-color;
+  }
 }
 
+// Popovers with `bar`
 .popover .bar {
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  @include box-shadow(none);
 }
 
+// Popovers with `bar-nav`
 .popover .bar-nav {
-  border-bottom: 1px solid rgba(0, 0, 0, .15);
+  border-bottom: 1px solid rgba(0,0,0,.15);
 }
 
+// Popovers with `table-views`
 .popover .table-view {
   background-image: none;
   border-radius: 12px;
 }
 
+
+// Modal styles
+// --------------------------------------------------
+
 .modal {
-  -webkit-transition-timing-function: cubic-bezier(.1, .5, .1, 1);
-     -moz-transition-timing-function: cubic-bezier(.1, .5, .1, 1);
-          transition-timing-function: cubic-bezier(.1, .5, .1, 1);
-}
-.modal.active {
-  -webkit-transition-timing-function: cubic-bezier(.1, .5, .1, 1);
-     -moz-transition-timing-function: cubic-bezier(.1, .5, .1, 1);
-          transition-timing-function: cubic-bezier(.1, .5, .1, 1);
+  @include transition-timing-function($timing-fuction);
+
+  // Active modal
+  &.active {
+    @include transition-timing-function($timing-fuction);
+  }
 }
 
+
+// Toggles styles
+// --------------------------------------------------
 .toggle {
   width: 47px;
   border: 2px solid #e6e6e6;
-  -webkit-box-shadow: inset 0 0 0 0 #e1e1e1;
-          box-shadow: inset 0 0 0 0 #e1e1e1;
-  -webkit-transition-duration: .2s;
-     -moz-transition-duration: .2s;
-          transition-duration: .2s;
-  -webkit-transition-property: box-shadow, border;
-     -moz-transition-property: box-shadow, border;
-          transition-property: box-shadow, border;
-}
-.toggle .toggle-handle {
-  border: 1px solid rgba(0, 0, 0, .2);
-  -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, .08);
-          box-shadow: 0 3px 3px rgba(0, 0, 0, .08);
-  -webkit-transition-property: -webkit-transform, border, width;
-     -moz-transition-property:    -moz-transform, border, width;
-          transition-property:         transform, border, width;
-}
-.toggle:before {
-  display: none;
-}
-.toggle.active {
-  background-color: transparent;
-  border: 2px solid #4cd964;
-  -webkit-box-shadow: inset 0 0 0 13px #4cd964;
-          box-shadow: inset 0 0 0 13px #4cd964;
-}
-.toggle.active .toggle-handle {
-  -webkit-transform: translate3d(17px, 0, 0);
-      -ms-transform: translate3d(17px, 0, 0);
-          transform: translate3d(17px, 0, 0);
-}
-.toggle.active .toggle-handle {
-  border-color: #4cd964;
-}
+  @include box-shadow(inset 0 0 0 0 #e1e1e1);
+  @include transition-property(box-shadow, border);
+  @include transition-duration(.2s);
 
-.content.fade {
-  -webkit-transition: opacity .2s ease-in-out;
-     -moz-transition: opacity .2s ease-in-out;
-          transition: opacity .2s ease-in-out;
-}
-.content.sliding {
-  -webkit-transition-timing-function: cubic-bezier(.1, .5, .1, 1);
-     -moz-transition-timing-function: cubic-bezier(.1, .5, .1, 1);
-          transition-timing-function: cubic-bezier(.1, .5, .1, 1);
-}
-.content.sliding.sliding-in, .content.sliding.right:not([class*="sliding-in"]) {
-  -webkit-animation-name: fadeOverlay;
-     -moz-animation-name: fadeOverlay;
-          animation-name: fadeOverlay;
-  -webkit-animation-duration: .4s;
-     -moz-animation-duration: .4s;
-          animation-duration: .4s;
-}
-.content.sliding.right:not([class*="sliding-in"]) {
-  -webkit-animation-direction: reverse;
-     -moz-animation-direction: reverse;
-          animation-direction: reverse;
-}
-.content.sliding.left {
-  -webkit-transform: translate3d(-20%, 0, 0);
-      -ms-transform: translate3d(-20%, 0, 0);
-          transform: translate3d(-20%, 0, 0);
-}
-
-@-webkit-keyframes fadeOverlay {
-  from {
-    -webkit-box-shadow: 0 0 10px transparent, -320px 0 0 transparent;
-            box-shadow: 0 0 10px transparent, -320px 0 0 transparent;
+  // Sliding handle
+  .toggle-handle {
+    border: 1px solid rgba(0, 0, 0, .2);
+    -webkit-transition-property: -webkit-transform, border, width;
+       -moz-transition-property: -moz-transform, border, width;
+            transition-property: transform, border, width;
+    @include box-shadow(0 3px 3px rgba(0,0,0,.08));
   }
+  &:before {
+    display: none;
+  }
+  // Active state for toggle
+  &.active {
+    background-color: transparent;
+    border: 2px solid $positive-color;
+    @include box-shadow(inset 0 0 0 13px $positive-color);
 
-  to {
-    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .3), -320px 0 0 rgba(0, 0, 0, .1);
-            box-shadow: 0 0 10px rgba(0, 0, 0, .3), -320px 0 0 rgba(0, 0, 0, .1);
+    .toggle-handle {
+      @include transform(translate3d(17px,0,0));
+    }
+
+    .toggle-handle {
+      border-color: $positive-color;
+    }
+  }
+}
+
+
+// Push styles
+// --------------------------------------------------
+.content {
+  // Fade animation
+  &.fade {
+    @include transition(opacity .2s ease-in-out);
+  }
+  // Slide animation
+  &.sliding {
+    @include transition-timing-function ($timing-fuction);
+
+    // Adding the overlay
+    &.sliding-in,
+    &.right:not([class*="sliding-in"]) {
+      @include animation-name(fadeOverlay);
+      @include animation-duration(.4s);
+    }
+
+    &.right:not([class*="sliding-in"]) {
+      @include animation-direction(reverse);
+    }
+
+    &.left {
+      @include transform(translate3d(-20%, 0, 0)); // Creates the parallax effect
+    }
+  }
+}
+
+// Overlay animation for the slide transition
+@at-root {
+  @-webkit-keyframes fadeOverlay {
+    from { @include box-shadow(0 0 10px rgba(0,0,0,0), -320px 0 0 rgba(0,0,0,0)); }
+    to   { @include box-shadow(0 0 10px rgba(0,0,0,.3), -320px 0 0 rgba(0,0,0,.1)); }
   }
 }
